@@ -35,8 +35,7 @@ namespace HeatmapSamples
             ));
 
             Receiver = new BitmapSimpleReceiver(pCanvas.ClientSize, new Size(1, 1));
-            float diagonal = (float)Math.Sqrt(Math.Pow(pCanvas.ClientSize.Width, 2) + Math.Pow(pCanvas.ClientSize.Height, 2));
-            Heatmap = new SimpleHeatmap((v) => (Vector2.Zero - v).Length() / diagonal, morph, Receiver);
+            Heatmap = new SimpleHeatmap(CalculateFragment, morph, Receiver);
 
             Heatmap.Progress += (o, e) =>
             {
@@ -45,6 +44,11 @@ namespace HeatmapSamples
 
                 Application.DoEvents();
             };
+        }
+
+        private static float CalculateFragment(Vector2 vector)
+        {
+            return (Vector2.Zero - vector).Length();
         }
 
         private void SimpleSynchronous_Shown(object sender, EventArgs methodEventArgs)
