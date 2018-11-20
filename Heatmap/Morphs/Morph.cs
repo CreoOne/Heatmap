@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Drawing;
-using System.Numerics;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
-namespace Heatmap
+namespace Heatmap.Morphs
 {
-    public class Morph
+    public sealed class Morph : IMorph
     {
         private const float MinColorEpsilon = 1 / 255f;
         private const float MaxColorEpsilon = 254 / 255f;
         private Color[] Palette;
         private float PartSize;
-
-        private const int CacheResolution = 1000;
-        private Dictionary<int, Color> Cache = new Dictionary<int, Color>(CacheResolution);
 
         public Morph(params Color[] palette)
         {
@@ -29,34 +22,20 @@ namespace Heatmap
 
         public Color GetColor(float position)
         {
-            int key = (int)(Math.Max(0, Math.Min(1, position)) * CacheResolution);
-
-            if (Cache.ContainsKey(key))
-                return Cache[key];
-
             int index = (int)(position / PartSize);
             float offset = (position - index * PartSize) / PartSize;
 
             Color first = Palette[index];
 
             if (offset < MinColorEpsilon)
-                return Add(key, first);
+                return first;
 
             Color second = Palette[index + 1];
 
             if (offset > MaxColorEpsilon)
-                return Add(key, second);
+                return second;
 
-            return Add(key, Lerp(first, second, offset));
-        }
-
-        private Color Add(int key, Color color)
-        {
-            if (Cache.ContainsKey(key))
-                return color;
-
-            Cache.Add(key, color);
-            return color;
+            return Lerp(first, second, offset);
         }
 
         private Color Lerp(Color q, Color r, float position)

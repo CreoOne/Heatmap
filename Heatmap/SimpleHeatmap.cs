@@ -1,4 +1,5 @@
-﻿using Heatmap.Receivers;
+﻿using Heatmap.Morphs;
+using Heatmap.Receivers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,12 +19,12 @@ namespace Heatmap
         private float MinValue = float.MaxValue;
         private float MaxValue = float.MinValue;
         private Func<Vector2, float> Function;
-        private Morph Morph;
+        private IMorph Morph;
         private IReceiver Receiver;
 
         public event EventHandler<ProgressEventArgs> Progress;
 
-        public SimpleHeatmap(Func<Vector2, float> function, Morph morph, IReceiver receiver)
+        public SimpleHeatmap(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
         {
             Function = function ?? throw new ArgumentNullException(nameof(function));
             Morph = morph ?? throw new ArgumentNullException(nameof(morph));

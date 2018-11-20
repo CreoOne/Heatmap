@@ -1,4 +1,5 @@
 ﻿using Heatmap;
+using Heatmap.Morphs;
 using Heatmap.Receivers;
 using System;
 using System.Collections.Generic;
@@ -24,14 +25,14 @@ namespace HeatmapSamples
         {
             InitializeComponent();
 
-            Morph morph = new Morph(
+            IMorph morph = new CachedMorph(1000, new Morph(
                 Color.White,
                 Color.FromArgb(255, 239, 167), // light yellow
                 Color.FromArgb(206, 168, 106), // calm orange
                 Color.FromArgb(140, 66, 57), // prestigue red
                 Color.FromArgb(46, 23, 54), // violet
                 Color.Black
-            );
+            ));
 
             Receiver = new BitmapSimpleReceiver(pCanvas.ClientSize, new Size(1, 1));
             float diagonal = (float)Math.Sqrt(Math.Pow(pCanvas.ClientSize.Width, 2) + Math.Pow(pCanvas.ClientSize.Height, 2));
