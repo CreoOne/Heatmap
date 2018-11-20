@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Heatmap.Receivers;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,11 +9,9 @@ namespace Heatmap
 {
     public class SimpleHeatmap
     {
-        private Size ResultSize = new Size(1, 1);
         private Size UnsampledSize = new Size(1, 1);
-        private int SampleSize = 1;
 
-        private Dictionary<Vector2, float>HeatMap = new Dictionary<Vector2, float>();
+        private Dictionary<Vector2, float> HeatMap = new Dictionary<Vector2, float>();
 
         private Vector2 ViewportMin = Vector2.Zero;
         private Vector2 ViewportMax = Vector2.One;
@@ -20,13 +19,17 @@ namespace Heatmap
         private float MaxValue = float.MinValue;
         private Func<Vector2, float> Function;
         private Morph Morph;
+        private IReceiver Receiver;
 
         public event EventHandler<ProgressEventArgs> Progress;
 
-        public SimpleHeatmap(Func<Vector2, float> function, Morph morph)
+        public SimpleHeatmap(Func<Vector2, float> function, Morph morph, IReceiver receiver)
         {
             Function = function ?? throw new ArgumentNullException(nameof(function));
             Morph = morph ?? throw new ArgumentNullException(nameof(morph));
+            Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
+
+            RecalculateUnsampledSize();
         }
 
         public void SetViewport(Vector2 min, Vector2 max)
@@ -35,31 +38,10 @@ namespace Heatmap
             ViewportMax = new Vector2(Math.Max(min.X, max.X), Math.Max(min.Y, max.Y));
         }
 
-        public void SetResultSize(int width, int height)
-        {
-            if (width < 0)
-                throw new ArgumentOutOfRangeException(nameof(width));
-
-            if (height < 0)
-                throw new ArgumentOutOfRangeException(nameof(height));
-
-            ResultSize = new Size(width, height);
-            RecalculateUnsampledSize();
-        }
-
-        public void SetSampleSize(int size)
-        {
-            if (size < 1)
-                throw new ArgumentOutOfRangeException(nameof(size));
-
-            SampleSize = size;
-            RecalculateUnsampledSize();
-        }
-
         private void RecalculateUnsampledSize()
         {
-            int unsampledWidth = (int)Math.Ceiling(ResultSize.Width / (decimal)SampleSize);
-            int unsampledHeight = (int)Math.Ceiling(ResultSize.Height / (decimal)SampleSize);
+            int unsampledWidth = (int)Math.Ceiling(1 / Receiver.SampleSize.X);
+            int unsampledHeight = (int)Math.Ceiling(1 / Receiver.SampleSize.Y);
             UnsampledSize = new Size(unsampledWidth, unsampledHeight);
         }
 
@@ -67,14 +49,13 @@ namespace Heatmap
         {
             float pointsDone = 0;
             float pointsOverall = UnsampledSize.Width * UnsampledSize.Height;
-            HeatMap = new Dictionary<Vector2, float>();
-            Vector2 size = new Vector2(ResultSize.Width, ResultSize.Height);
+            HeatMap = new Dictionary<Vector2, float>(UnsampledSize.Width * UnsampledSize.Height);
 
             foreach (int y in Enumerable.Range(0, UnsampledSize.Height))
                 foreach (int x in Enumerable.Range(0, UnsampledSize.Width))
                 {
-                    Vector2 position = new Vector2(x, y) * SampleSize;
-                    float value = Function(ViewportMin + (ViewportMax - ViewportMin) * (position / size));
+                    Vector2 position = new Vector2(x, y) * Receiver.SampleSize;
+                    float value = Function(ViewportMin + (ViewportMax - ViewportMin) * position);
                     HeatMap.Add(position, value);
 
                     if (value < MinValue)
@@ -87,35 +68,17 @@ namespace Heatmap
                 }
         }
 
-        public Bitmap GetResultCurrentStateAsync()
+        public void Commit()
         {
-            Bitmap result = new Bitmap(ResultSize.Width, ResultSize.Height);
+            float range = MaxValue - MinValue;
 
-            using (Graphics context = Graphics.FromImage(result))
+            if (range <= float.Epsilon)
+                return;
+
+            foreach (KeyValuePair<Vector2, float> point in HeatMap)
             {
-                context.Clear(Color.Transparent);
-
-                if (HeatMap.Count < 0)
-                    return result;
-
-                float range = MaxValue - MinValue;
-
-                if (range <= float.Epsilon)
-                    return result;
-
-                foreach (int y in Enumerable.Range(0, UnsampledSize.Height))
-                    foreach (int x in Enumerable.Range(0, UnsampledSize.Width))
-                    {
-                        Vector2 position = new Vector2(x, y) * SampleSize;
-
-                        if (!HeatMap.ContainsKey(position))
-                            continue;
-
-                        using (SolidBrush brush  = new SolidBrush(Morph.GetColor((HeatMap[position] - MinValue) / range)))
-                            context.FillRectangle(brush, x * SampleSize, (ResultSize.Height - SampleSize) - y * SampleSize, SampleSize, SampleSize);
-                    }
-
-                return result;
+                Color color = Morph.GetColor((point.Value - MinValue) / range);
+                Receiver.Receive(point.Key, Vector2.One, color);
             }
         }
     }

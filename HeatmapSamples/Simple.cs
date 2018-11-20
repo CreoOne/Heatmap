@@ -1,4 +1,5 @@
 ﻿using Heatmap;
+using Heatmap.Receivers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace HeatmapSamples
     public partial class Simple : Form
     {
         private SimpleHeatmap Heatmap;
+        private BitmapSimpleReceiver Receiver;
         private DateTime StartTime;
         private DateTime StopTime;
 
@@ -30,9 +32,10 @@ namespace HeatmapSamples
                 Color.FromArgb(46, 23, 54), // violet
                 Color.Black
             );
-            Heatmap = new SimpleHeatmap((v) => 1.4f - (v - new Vector2(0.5f)).Length(), morph);
-            Heatmap.SetResultSize(pCanvas.ClientSize.Width, pCanvas.ClientSize.Height);
-            Heatmap.SetSampleSize(10);
+
+            Receiver = new BitmapSimpleReceiver(pCanvas.ClientSize, new Size(1, 1));
+            float diagonal = (float)Math.Sqrt(Math.Pow(pCanvas.ClientSize.Width, 2) + Math.Pow(pCanvas.ClientSize.Height, 2));
+            Heatmap = new SimpleHeatmap((v) => (Vector2.Zero - v).Length() / diagonal, morph, Receiver);
 
             Heatmap.Progress += (o, e) =>
             {
@@ -52,7 +55,8 @@ namespace HeatmapSamples
                 pCanvas.Image.Dispose();
 
             DateTime startTime = DateTime.UtcNow;
-            pCanvas.Image = Heatmap.GetResultCurrentStateAsync();
+            Heatmap.Commit();
+            pCanvas.Image = Receiver.Result;
             Text = string.Format("Calculation done in {0:####0.00}ms | Drawing done in {1:####0.00}ms", (StopTime - StartTime).TotalMilliseconds, (DateTime.UtcNow - startTime).TotalMilliseconds);
             pCanvas.Invalidate();
         }

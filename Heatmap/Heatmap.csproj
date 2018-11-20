@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Receivers\BitmapSimpleReceiver.cs" />
+    <Compile Include="Receivers\IReceiver.cs" />
     <Compile Include="Morph.cs" />
     <Compile Include="ProgressEventArgs.cs" />
     <Compile Include="SimpleHeatmap.cs" />
