@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Morphs\DitheredMorph.cs" />
     <Compile Include="Morphs\Morph.cs" />
     <Compile Include="Morphs\IMorph.cs" />
     <Compile Include="Receivers\BitmapSimpleReceiver.cs" />
