@@ -25,7 +25,8 @@ namespace Heatmap.Morphs
 
         public Color GetColor(float position)
         {
-            int key = (int)(Math.Max(0, Math.Min(CacheResolution - 1, position * (CacheResolution - 1))));
+            float offset = 0.5f / CacheResolution;
+            int key = (int)(Math.Max(0, Math.Min(1, position + offset)) * (CacheResolution - 1));
 
             return Cache[key];
         }
