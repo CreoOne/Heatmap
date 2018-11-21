@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Heatmap.Extensions;
+using System;
 using System.Drawing;
 using System.Numerics;
 
@@ -20,7 +21,7 @@ namespace Heatmap.Receivers
             Context = Graphics.FromImage(Result);
             Context.Clear(Color.Transparent);
 
-            SampleSize = new Vector2(sampleSize.Width / (float)bitmapSize.Width, sampleSize.Height / (float)bitmapSize.Height);
+            SampleSize = sampleSize.ToVector2() / bitmapSize.ToVector2();
         }
 
         public void Receive(Vector2 position, Vector2 size, Color color)

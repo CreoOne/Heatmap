@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\SizeToVector2Extension.cs" />
+    <Compile Include="Extensions\Vector2RoundExtension.cs" />
+    <Compile Include="Extensions\Vector2ToSizeExtension.cs" />
     <Compile Include="Morphs\DitheredMorph.cs" />
     <Compile Include="Morphs\Morph.cs" />
     <Compile Include="Morphs\IMorph.cs" />

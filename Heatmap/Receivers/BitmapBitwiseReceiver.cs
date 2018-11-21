@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Heatmap.Extensions;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -16,13 +17,13 @@ namespace Heatmap.Receivers
         public BitmapBitwiseReceiver(Size bitmapSize, Size sampleSize)
         {
             BitmapSize = bitmapSize;
-            SampleSize = new Vector2(sampleSize.Width / (float)bitmapSize.Width, sampleSize.Height / (float)bitmapSize.Height);
+            SampleSize = sampleSize.ToVector2() / bitmapSize.ToVector2();
             Bytes = new byte[bitmapSize.Width * 4 * bitmapSize.Height];
         }
 
         public void Receive(Vector2 position, Vector2 size, Color color)
         {
-            Size bitmapSpaceSize = new Size((int)Math.Round(size.X * BitmapSize.Width), (int)Math.Round(size.Y * BitmapSize.Height));
+            Size bitmapSpaceSize = (size * BitmapSize.ToVector2()).Round().ToSize();
             int index = PositionToIndex(position);
 
             foreach (int y in Enumerable.Range(0, bitmapSpaceSize.Height))
