@@ -18,7 +18,7 @@ namespace HeatmapSamples
     public partial class Simple : Form
     {
         private SimpleHeatmap Heatmap;
-        private BitmapGraphicsReceiver Receiver;
+        private BitmapBitwiseReceiver Receiver;
         private DateTime StartTime;
         private DateTime StopTime;
 
@@ -35,7 +35,7 @@ namespace HeatmapSamples
                 Color.Black
             ));
 
-            Receiver = new BitmapGraphicsReceiver(pCanvas.ClientSize, new Size(1, 1));
+            Receiver = new BitmapBitwiseReceiver(pCanvas.ClientSize, new Size(1, 1));
             Heatmap = new SimpleHeatmap(CalculateFragment, morph, Receiver);
 
             int updateCount = 0;
@@ -67,7 +67,7 @@ namespace HeatmapSamples
             Heatmap.Calculate();
             DateTime startTime = DateTime.UtcNow;
             Heatmap.Commit();
-            pCanvas.Image = Receiver.Result;
+            pCanvas.Image = Receiver.ProduceBitmap();
             Text = string.Format("Calculation done in {0:####0.00}ms | Drawing done in {1:####0.00}ms", (StopTime - StartTime).TotalMilliseconds, (DateTime.UtcNow - startTime).TotalMilliseconds);
             pCanvas.Invalidate();
         }
