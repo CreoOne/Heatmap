@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace Heatmap.Receivers
 {
-    public class BitmapSimpleReceiver : IReceiver, IDisposable
+    public class BitmapGraphicsReceiver : IReceiver, IDisposable
     {
         public Vector2 SampleSize { get; private set; }
         public Bitmap Result { get; private set; }
@@ -12,7 +12,7 @@ namespace Heatmap.Receivers
         private Vector2 BitmapSize;
         private Graphics Context;
 
-        public BitmapSimpleReceiver(Size bitmapSize, Size sampleSize)
+        public BitmapGraphicsReceiver(Size bitmapSize, Size sampleSize)
         {
             BitmapSize = new Vector2(bitmapSize.Width, bitmapSize.Height);
             Result = new Bitmap(bitmapSize.Width, bitmapSize.Height);

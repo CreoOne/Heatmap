@@ -48,7 +48,7 @@
     <Compile Include="Morphs\DitheredMorph.cs" />
     <Compile Include="Morphs\Morph.cs" />
     <Compile Include="Morphs\IMorph.cs" />
-    <Compile Include="Receivers\BitmapSimpleReceiver.cs" />
+    <Compile Include="Receivers\BitmapGraphicsReceiver.cs" />
     <Compile Include="Receivers\IReceiver.cs" />
     <Compile Include="Morphs\CachedMorph.cs" />
     <Compile Include="ProgressEventArgs.cs" />
