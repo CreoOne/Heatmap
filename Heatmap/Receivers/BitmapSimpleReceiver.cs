@@ -26,7 +26,7 @@ namespace Heatmap.Receivers
         public void Receive(Vector2 position, Vector2 size, Color color)
         {
             Vector2 bitmapPosition = position * BitmapSize;
-            Vector2 bitmapSize = size * SampleSize * BitmapSize;
+            Vector2 bitmapSize = size * BitmapSize;
 
             using (Brush brush = new SolidBrush(color))
                 Context.FillRectangle(brush, bitmapPosition.X, bitmapPosition.Y, bitmapSize.X, bitmapSize.Y);

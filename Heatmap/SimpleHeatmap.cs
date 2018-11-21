@@ -79,7 +79,7 @@ namespace Heatmap
             foreach (KeyValuePair<Vector2, float> point in HeatMap)
             {
                 Color color = Morph.GetColor((point.Value - MinValue) / range);
-                Receiver.Receive(point.Key, Vector2.One, color);
+                Receiver.Receive(point.Key, Receiver.SampleSize, color);
             }
         }
     }

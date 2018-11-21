@@ -26,15 +26,14 @@ namespace HeatmapSamples
         {
             InitializeComponent();
 
-            IMorph morph = new DitheredMorph(RandomNumberGenerator.Create(),
-            //IMorph morph = new CachedMorph(1000, new Morph(
+            IMorph morph = new CachedMorph(1000, new Morph(
                 Color.White,
                 Color.FromArgb(255, 239, 167), // light yellow
                 Color.FromArgb(206, 168, 106), // calm orange
                 Color.FromArgb(140, 66, 57), // prestigue red
                 Color.FromArgb(46, 23, 54), // violet
                 Color.Black
-            );
+            ));
 
             Receiver = new BitmapSimpleReceiver(pCanvas.ClientSize, new Size(1, 1));
             Heatmap = new SimpleHeatmap(CalculateFragment, morph, Receiver);
