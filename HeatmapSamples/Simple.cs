@@ -38,15 +38,12 @@ namespace HeatmapSamples
             Receiver = new BitmapBitwiseReceiver(pCanvas.ClientSize, new Size(1, 1));
             Heatmap = new SimpleHeatmap(CalculateFragment, morph, Receiver);
 
-            int updateCount = 0;
-
             Heatmap.Progress += (o, e) =>
             {
-                if (updateCount++ % 1000 == 0)
-                {
-                    Text = string.Format("Progress {0:##0.0%}", e.ProcentageDone);
-                    Application.DoEvents();
-                }
+                Heatmap.Commit();
+                pCanvas.Image = Receiver.ProduceBitmap();
+                pCanvas.Invalidate();
+                Text = string.Format("Progress {0:##0.0%}", e.ProcentageDone);
 
                 StopTime = DateTime.UtcNow;
             };
@@ -57,14 +54,14 @@ namespace HeatmapSamples
             return (Vector2.Zero - vector).Length();
         }
 
-        private void SimpleSynchronous_Shown(object sender, EventArgs methodEventArgs)
+        private async void SimpleSynchronous_Shown(object sender, EventArgs methodEventArgs)
         {
             StartTime = DateTime.UtcNow;
 
             if (pCanvas.Image != null)
                 pCanvas.Image.Dispose();
 
-            Heatmap.Calculate();
+            await Heatmap.CalculateAsync();
             DateTime startTime = DateTime.UtcNow;
             Heatmap.Commit();
             pCanvas.Image = Receiver.ProduceBitmap();

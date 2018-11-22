@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace Heatmap
 {
@@ -46,7 +47,7 @@ namespace Heatmap
             UnsampledSize = new Size(unsampledWidth, unsampledHeight);
         }
 
-        public void Calculate()
+        public async Task CalculateAsync()
         {
             float pointsDone = 0;
             float pointsOverall = UnsampledSize.Width * UnsampledSize.Height;
@@ -56,7 +57,7 @@ namespace Heatmap
                 foreach (int x in Enumerable.Range(0, UnsampledSize.Width))
                 {
                     Vector2 position = new Vector2(x, y) * Receiver.SampleSize;
-                    float value = Function(ViewportMin + (ViewportMax - ViewportMin) * position);
+                    float value = await Task.Factory.StartNew(() => Function(ViewportMin + (ViewportMax - ViewportMin) * position));
                     HeatMap.Add(position, value);
 
                     if (value < MinValue)
