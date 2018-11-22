@@ -15,45 +15,47 @@ namespace Heatmap
         public QuadTreeHeatmap(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
             : base(function, morph, receiver) { }
 
-        public override async Task CalculateAsync()
+        public override Task CalculateAsync()
         {
             ClearValues();
 
             foreach(int regionNumber in Enumerable.Range(0, 4))
-                await CalculateRegion(regionNumber);
+                CalculateRegion(regionNumber);
 
             if(!TooDeep(0))
                 foreach (int regionNumber in Enumerable.Range(0, 4))
-                    await EnterRegion(regionNumber);
+                    EnterRegion(regionNumber);
+
+            return Task.Delay(1);
         }
 
-        private async Task CalculateRegion(int regionNumber, int depth = 0)
+        private void CalculateRegion(int regionNumber, int depth = 0)
         {
             Vector2 position = ProduceUnitPositionFromGlobalRegion(regionNumber, depth);
-            float value = await GetValue(position);
+            float value = Task.Factory.StartNew(() => GetValue(position)).Result.Result;
             AddValue(position, new Vector2(DepthToPrecition(depth)), value);
         }
 
-        private async Task EnterRegion(int regionNumber, int depth = 0)
+        private void EnterRegion(int regionNumber, int depth = 0)
         {
             int[] globalRegionNumbers = Enumerable.Range(0, 4)
                 .Select(i => ProduceGlobalRegionNumber(regionNumber, i, depth + 1))
                 .ToArray();
 
             foreach (int localRegionNumber in Enumerable.Range(1, 3))
-                await CalculateRegion(globalRegionNumbers[localRegionNumber], depth + 1);
+                CalculateRegion(globalRegionNumbers[localRegionNumber], depth + 1);
 
             if(!TooDeep(depth))
                 foreach (int localRegionNumber in Enumerable.Range(0, 4))
-                    await EnterRegion(globalRegionNumbers[localRegionNumber], depth + 1);
+                    EnterRegion(globalRegionNumbers[localRegionNumber], depth + 1);
         }
 
         private bool TooDeep(int depth)
         {
-            float precision = DepthToPrecition(depth - 1);
+            float precision = DepthToPrecition(depth + 2);
             Vector2 sampleSize = PixelSpaceToUnitSpace(Vector2.One);
 
-            return precision <= sampleSize.X || precision <= sampleSize.Y;
+            return precision <= sampleSize.X && precision <= sampleSize.Y;
         }
 
         private static int ProduceGlobalRegionNumber(int regionNumber, int childRegionNumber, int depth)

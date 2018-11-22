@@ -35,20 +35,20 @@ namespace HeatmapSamples
                 Color.Black
             ));
 
-            Receiver = new BitmapGraphicsReceiver(pCanvas.ClientSize, new Size(1, 1));
+            Receiver = new BitmapGraphicsReceiver(pCanvas.ClientSize, new Size(10, 10));
             Heatmap = new QuadTreeHeatmap(CalculateFragment, morph, Receiver);
 
             int progressUpdates = 0;
 
             Heatmap.Progress += (o, e) =>
             {
-                /*if (progressUpdates++ % 10000 == 0)
+                if (progressUpdates++ % 10 == 0)
                 {
                     Heatmap.Commit();
                     pCanvas.Image = Receiver.Result;
                     pCanvas.Invalidate();
                     Application.DoEvents();
-                }*/
+                }
 
                 Text = string.Format("Progress {0:##0.0%}", e.ProcentageDone);
                 StopTime = DateTime.UtcNow;

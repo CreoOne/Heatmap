@@ -24,6 +24,8 @@ namespace Heatmap
         private IMorph Morph;
         private IReceiver Receiver;
 
+        private readonly object AddLock = new object();
+
         public event EventHandler<ProgressEventArgs> Progress;
 
         public HeatmapAbstract(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
@@ -62,7 +64,8 @@ namespace Heatmap
 
         protected void AddValue(Vector2 position, Vector2 size, float value)
         {
-            HeatMap.Add(position, Tuple.Create(value, size));
+            lock(AddLock)
+                HeatMap.Add(position, Tuple.Create(value, size));
 
             if (value < MinValue)
                 MinValue = value;
