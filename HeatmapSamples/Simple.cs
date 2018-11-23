@@ -18,7 +18,7 @@ namespace HeatmapSamples
     public partial class Simple : Form
     {
         private HeatmapAbstract Heatmap;
-        private BitmapGraphicsReceiver Receiver;
+        private BitmapBitwiseReceiver Receiver;
         private DateTime StartTime;
         private DateTime StopTime;
 
@@ -35,7 +35,7 @@ namespace HeatmapSamples
                 Color.Black
             ));
 
-            Receiver = new BitmapGraphicsReceiver(pCanvas.ClientSize, new Size(5, 5));
+            Receiver = new BitmapBitwiseReceiver(pCanvas.ClientSize, new Size(20, 20));
             Heatmap = new QuadTreeHeatmap(CalculateFragment, morph, Receiver);
 
             int progressUpdates = 0;

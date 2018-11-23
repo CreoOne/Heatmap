@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Heatmap.Morphs;
@@ -8,8 +9,35 @@ namespace Heatmap
 {
     public class QuadTreeHeatmap : HeatmapAbstract
     {
+        private int MaxDepth;
+        private float[] Precisions;
+
         public QuadTreeHeatmap(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
-            : base(function, morph, receiver) { }
+            : base(function, morph, receiver)
+        {
+            CalculateMaxDepth();
+            PrecalculatePrecisionTable();
+        }
+
+        private void CalculateMaxDepth()
+        {
+            Vector2 sampleSize = PixelSpaceToUnitSpace(Vector2.One);
+            int depth = 0;
+
+            do
+            {
+                sampleSize *= 2;
+                depth++;
+            }
+            while (sampleSize.X < 1 || sampleSize.Y < 1);
+
+            MaxDepth = depth - 1;
+        }
+
+        private void PrecalculatePrecisionTable()
+        {
+            Precisions = Enumerable.Range(0, MaxDepth + 1).Select(i => DepthToPrecision(i)).ToArray();
+        }
 
         public override void Calculate()
         {
@@ -27,7 +55,7 @@ namespace Heatmap
         {
             Vector2 position = ProduceUnitPositionFromGlobalRegion(regionNumber, depth);
             float value = GetValue(position);
-            AddValue(position, new Vector2(DepthToPrecition(depth)), value);
+            AddValue(position, new Vector2(Precisions[depth]), value);
         }
 
         private void EnterRegion(int regionNumber, int depth = 0)
@@ -46,10 +74,7 @@ namespace Heatmap
 
         private bool TooDeep(int depth)
         {
-            float precision = DepthToPrecition(depth + 2);
-            Vector2 sampleSize = PixelSpaceToUnitSpace(Vector2.One);
-
-            return precision <= sampleSize.X && precision <= sampleSize.Y;
+            return depth + 1 >= MaxDepth;
         }
 
         private static int ProduceGlobalRegionNumber(int regionNumber, int childRegionNumber, int depth)
@@ -57,7 +82,7 @@ namespace Heatmap
             return regionNumber | childRegionNumber << (depth * 2);
         }
 
-        private static Vector2 ProduceUnitPositionFromGlobalRegion(int globalRegion, int depth)
+        private Vector2 ProduceUnitPositionFromGlobalRegion(int globalRegion, int depth)
         {
             Vector2 result = Vector2.Zero;
 
@@ -66,7 +91,7 @@ namespace Heatmap
                 int mask = 3 << (index * 2);
                 int part = (globalRegion & mask) >> (index * 2);
 
-                float precision = DepthToPrecition(index);
+                float precision = Precisions[index];
                 float xShift = (part & 1) == 0 ? 0 : precision;
                 float yShift = (part & 2) == 0 ? 0 : precision;
 
@@ -76,9 +101,9 @@ namespace Heatmap
             return result;
         }
 
-        private static float DepthToPrecition(int depth)
+        private static float DepthToPrecision(int depth)
         {
-            return (float)(1 / Math.Pow(2, depth + 1));
+            return (float)Math.Pow(2, -(depth + 1));
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Heatmap.Receivers
                     if (Math.Round(position.X * BitmapSize.Width) + x >= BitmapSize.Width)
                         break;
 
-                    int offset = y * BitmapSize.Width * 4 + x * 4;
+                    int offset = (y * BitmapSize.Width + x) * 4;
 
                     if (index + offset >= Bytes.Length)
                         return;
@@ -46,7 +46,7 @@ namespace Heatmap.Receivers
 
         private int PositionToIndex(Vector2 position)
         {
-            return (int)(Math.Round(position.Y * BitmapSize.Height * BitmapSize.Width) * 4 + Math.Round(position.X * BitmapSize.Width) * 4);
+            return (int)(Math.Round(position.Y * BitmapSize.Height * BitmapSize.Width + position.X * BitmapSize.Width) * 4);
         }
 
         public Bitmap ProduceBitmap()
