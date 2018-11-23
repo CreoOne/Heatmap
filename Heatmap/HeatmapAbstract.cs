@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Heatmap
 {
@@ -23,8 +21,6 @@ namespace Heatmap
         private Func<Vector2, float> Function;
         private IMorph Morph;
         private IReceiver Receiver;
-
-        private readonly object AddLock = new object();
 
         public event EventHandler<ProgressEventArgs> Progress;
 
@@ -64,8 +60,7 @@ namespace Heatmap
 
         protected void AddValue(Vector2 position, Vector2 size, float value)
         {
-            lock(AddLock)
-                HeatMap.Add(position, Tuple.Create(value, size));
+            HeatMap.Add(position, Tuple.Create(value, size));
 
             if (value < MinValue)
                 MinValue = value;
