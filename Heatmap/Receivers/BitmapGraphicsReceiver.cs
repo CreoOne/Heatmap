@@ -8,9 +8,9 @@ namespace Heatmap.Receivers
     public class BitmapGraphicsReceiver : IReceiver, IDisposable
     {
         public Vector2 SampleSize { get; private set; }
-        public Bitmap Result { get; private set; }
-
         private Vector2 BitmapSize;
+
+        private Bitmap Result;
         private Graphics Context;
 
         public BitmapGraphicsReceiver(Size bitmapSize, Size sampleSize)
@@ -31,6 +31,11 @@ namespace Heatmap.Receivers
 
             using (Brush brush = new SolidBrush(color))
                 Context.FillRectangle(brush, bitmapPosition.X, bitmapPosition.Y, bitmapSize.X, bitmapSize.Y);
+        }
+
+        public Bitmap ProduceBitmap()
+        {
+            return Result;
         }
 
         public void Dispose()
