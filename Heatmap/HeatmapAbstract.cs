@@ -50,16 +50,16 @@ namespace Heatmap
             UnsampledSize = new Size(unsampledWidth, unsampledHeight);
         }
 
-        public abstract Task CalculateAsync();
+        public abstract void Calculate();
 
         protected void ClearValues()
         {
             HeatMap = new Dictionary<Vector2, Tuple<float, Vector2>>(UnsampledSize.Width * UnsampledSize.Height);
         }
 
-        protected async Task<float> GetValue(Vector2 position)
+        protected float GetValue(Vector2 position)
         {
-            return await Task.Factory.StartNew(() => Function(ViewportMin + (ViewportMax - ViewportMin) * position));
+            return Function(ViewportMin + (ViewportMax - ViewportMin) * position);
         }
 
         protected void AddValue(Vector2 position, Vector2 size, float value)

@@ -12,7 +12,7 @@ namespace Heatmap
         public SimpleHeatmap(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
             : base(function, morph, receiver) { }
 
-        public override async Task CalculateAsync()
+        public override void Calculate()
         {
             ClearValues();
 
@@ -20,7 +20,7 @@ namespace Heatmap
                 foreach (int x in Enumerable.Range(0, UnsampledSize.Width))
                 {
                     Vector2 position = PixelSpaceToUnitSpace(new Vector2(x, y));
-                    float value = await GetValue(position);
+                    float value = GetValue(position);
                     AddValue(position, PixelSpaceToUnitSpace(Vector2.One), value);
                 }
         }

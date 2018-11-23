@@ -15,7 +15,7 @@ namespace Heatmap
         public QuadTreeHeatmap(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
             : base(function, morph, receiver) { }
 
-        public override Task CalculateAsync()
+        public override void Calculate()
         {
             ClearValues();
 
@@ -25,14 +25,12 @@ namespace Heatmap
             if(!TooDeep(0))
                 foreach (int regionNumber in Enumerable.Range(0, 4))
                     EnterRegion(regionNumber);
-
-            return Task.Delay(1);
         }
 
         private void CalculateRegion(int regionNumber, int depth = 0)
         {
             Vector2 position = ProduceUnitPositionFromGlobalRegion(regionNumber, depth);
-            float value = Task.Factory.StartNew(() => GetValue(position)).Result.Result;
+            float value = GetValue(position);
             AddValue(position, new Vector2(DepthToPrecition(depth)), value);
         }
 

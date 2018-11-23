@@ -60,14 +60,14 @@ namespace HeatmapSamples
             return (Vector2.Zero - vector).Length();
         }
 
-        private async void SimpleSynchronous_Shown(object sender, EventArgs methodEventArgs)
+        private void SimpleSynchronous_Shown(object sender, EventArgs methodEventArgs)
         {
             StartTime = DateTime.UtcNow;
 
             if (pCanvas.Image != null)
                 pCanvas.Image.Dispose();
 
-            await Heatmap.CalculateAsync();
+            Heatmap.Calculate();
             DateTime startTime = DateTime.UtcNow;
             Heatmap.Commit();
             pCanvas.Image = Receiver.Result;
