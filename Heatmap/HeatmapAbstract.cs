@@ -12,7 +12,7 @@ namespace Heatmap
     {
         protected Size UnsampledSize { get; private set; } = new Size(1, 1);
 
-        private Dictionary<Vector2, Tuple<float, Vector2>> HeatMap = new Dictionary<Vector2, Tuple<float, Vector2>>();
+        private List<PatchHolder> HeatMap = new List<PatchHolder>();
 
         private Vector2 ViewportMin = Vector2.Zero;
         private Vector2 ViewportMax = Vector2.One;
@@ -50,7 +50,7 @@ namespace Heatmap
 
         protected void ClearValues()
         {
-            HeatMap = new Dictionary<Vector2, Tuple<float, Vector2>>(UnsampledSize.Width * UnsampledSize.Height);
+            HeatMap = new List<PatchHolder>(UnsampledSize.Width * UnsampledSize.Height);
         }
 
         protected float GetValue(Vector2 position)
@@ -60,7 +60,7 @@ namespace Heatmap
 
         protected void AddValue(Vector2 position, Vector2 size, float value)
         {
-            HeatMap.Add(position, Tuple.Create(value, size));
+            HeatMap.Add(new PatchHolder(position, size, value));
 
             if (value < MinValue)
                 MinValue = value;
@@ -95,10 +95,24 @@ namespace Heatmap
             if (range <= float.Epsilon)
                 return;
 
-            foreach (KeyValuePair<Vector2, Tuple<float, Vector2>> point in HeatMap)
+            foreach (PatchHolder patch in HeatMap)
             {
-                Color color = Morph.GetColor((point.Value.Item1 - MinValue) / range);
-                Receiver.Receive(point.Key, point.Value.Item2, color);
+                Color color = Morph.GetColor((patch.Value - MinValue) / range);
+                Receiver.Receive(patch.Position, patch.Size, color);
+            }
+        }
+
+        private struct PatchHolder
+        {
+            public Vector2 Position { get; private set; }
+            public Vector2 Size { get; private set; }
+            public float Value { get; private set; }
+
+            public PatchHolder(Vector2 position, Vector2 size, float value)
+            {
+                Position = position;
+                Size = size;
+                Value = value;
             }
         }
     }
