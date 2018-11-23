@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\SizeToVector2Extension.cs" />
+    <Compile Include="Extensions\Vector2CeilingExtension.cs" />
     <Compile Include="Extensions\Vector2RoundExtension.cs" />
     <Compile Include="Extensions\Vector2ToSizeExtension.cs" />
     <Compile Include="HeatmapAbstract.cs" />

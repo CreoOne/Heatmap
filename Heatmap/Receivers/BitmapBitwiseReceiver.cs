@@ -23,7 +23,7 @@ namespace Heatmap.Receivers
 
         public void Receive(Vector2 position, Vector2 size, Color color)
         {
-            Size bitmapSpaceSize = (size * BitmapSize.ToVector2()).Round().ToSize();
+            Size bitmapSpaceSize = (size * BitmapSize.ToVector2()).Ceiling().ToSize();
             int index = PositionToIndex(position);
 
             foreach (int y in Enumerable.Range(0, bitmapSpaceSize.Height))
@@ -46,8 +46,7 @@ namespace Heatmap.Receivers
 
         private int PositionToIndex(Vector2 position)
         {
-            int stride = BitmapSize.Width * 4;
-            return (int)(Math.Round(position.Y * BitmapSize.Height * stride + position.X * stride));
+            return (int)(Math.Round(position.Y * BitmapSize.Height * BitmapSize.Width) * 4 + Math.Round(position.X * BitmapSize.Width) * 4);
         }
 
         public Bitmap ProduceBitmap()

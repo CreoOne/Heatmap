@@ -18,7 +18,7 @@ namespace HeatmapSamples
     public partial class Simple : Form
     {
         private HeatmapAbstract Heatmap;
-        private BitmapGraphicsReceiver Receiver;
+        private BitmapBitwiseReceiver Receiver;
         private DateTime StartTime;
         private DateTime StopTime;
 
@@ -35,7 +35,7 @@ namespace HeatmapSamples
                 Color.Black
             ));
 
-            Receiver = new BitmapGraphicsReceiver(pCanvas.ClientSize, new Size(10, 10));
+            Receiver = new BitmapBitwiseReceiver(pCanvas.ClientSize, new Size(1, 1));
             Heatmap = new QuadTreeHeatmap(CalculateFragment, morph, Receiver);
 
             int progressUpdates = 0;
@@ -45,7 +45,7 @@ namespace HeatmapSamples
                 if (progressUpdates++ % 10 == 0)
                 {
                     Heatmap.Commit();
-                    pCanvas.Image = Receiver.Result;
+                    pCanvas.Image = Receiver.ProduceBitmap();
                     pCanvas.Invalidate();
                     Application.DoEvents();
                 }
@@ -70,7 +70,7 @@ namespace HeatmapSamples
             Heatmap.Calculate();
             DateTime startTime = DateTime.UtcNow;
             Heatmap.Commit();
-            pCanvas.Image = Receiver.Result;
+            pCanvas.Image = Receiver.ProduceBitmap();
             Text = string.Format("Calculation done in {0:####0.00}ms | Drawing done in {1:####0.00}ms", (StopTime - StartTime).TotalMilliseconds, (DateTime.UtcNow - startTime).TotalMilliseconds);
             pCanvas.Invalidate();
         }
