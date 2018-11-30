@@ -53,7 +53,6 @@
     <Compile Include="Morphs\DitheredMorph.cs" />
     <Compile Include="Morphs\Morph.cs" />
     <Compile Include="Morphs\IMorph.cs" />
-    <Compile Include="QuadTreeHeatmap.cs" />
     <Compile Include="Receivers\BitmapBitwiseReceiver.cs" />
     <Compile Include="Receivers\BitmapGraphicsReceiver.cs" />
     <Compile Include="Receivers\IReceiver.cs" />

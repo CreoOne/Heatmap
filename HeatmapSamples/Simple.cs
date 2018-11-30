@@ -36,7 +36,7 @@ namespace HeatmapSamples
             ));
 
             Receiver = new BitmapBitwiseReceiver(pCanvas.ClientSize, new Size(20, 20));
-            Heatmap = new QuadTreeHeatmap(CalculateFragment, morph, Receiver);
+            Heatmap = new SimpleHeatmap(CalculateFragment, morph, Receiver);
 
             int progressUpdates = 0;
 
