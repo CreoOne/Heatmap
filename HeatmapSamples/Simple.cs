@@ -36,7 +36,7 @@ namespace HeatmapSamples
             ));
 
             Receiver = new BitmapBitwiseReceiver(pCanvas.ClientSize, new Size(20, 20));
-            Heatmap = new SimpleHeatmap(CalculateFragment, morph, Receiver);
+            Heatmap = new HeatmapGenerator(CalculateFragment, morph, Receiver);
 
             int progressUpdates = 0;
 

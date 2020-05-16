@@ -6,9 +6,9 @@ using System.Numerics;
 
 namespace Heatmap
 {
-    public class SimpleHeatmap : HeatmapAbstract
+    public class HeatmapGenerator : HeatmapAbstract
     {
-        public SimpleHeatmap(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
+        public HeatmapGenerator(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
             : base(function, morph, receiver) { }
 
         public override void Calculate()
