@@ -12,8 +12,6 @@ namespace HeatmapSamples
     {
         private HeatmapAbstract Heatmap;
         private BitmapBitwiseReceiver Receiver;
-        private DateTime StartTime;
-        private DateTime StopTime;
 
         public Simple()
         {
@@ -51,15 +49,8 @@ namespace HeatmapSamples
 
         private void SimpleSynchronous_Shown(object sender, EventArgs methodEventArgs)
         {
-            StartTime = DateTime.UtcNow;
-
             Heatmap.Calculate();
-
-            DateTime startTime = DateTime.UtcNow;
-
             UpdateBitmap();
-
-            Text = string.Format("Calculation done in {0:####0.00}ms | Drawing done in {1:####0.00}ms", (StopTime - StartTime).TotalMilliseconds, (DateTime.UtcNow - startTime).TotalMilliseconds);
         }
     }
 }
