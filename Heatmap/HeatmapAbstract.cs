@@ -3,7 +3,6 @@ using Heatmap.Receivers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
 
 namespace Heatmap
@@ -21,8 +20,6 @@ namespace Heatmap
         private Func<Vector2, float> Function;
         private IMorph Morph;
         private IReceiver Receiver;
-
-        public event EventHandler<ProgressEventArgs> Progress;
 
         public HeatmapAbstract(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
         {
@@ -67,8 +64,6 @@ namespace Heatmap
 
             if (value > MaxValue)
                 MaxValue = value;
-
-            UpdateProgress();
         }
 
         protected Vector2 PixelSpaceToUnitSpace(Vector2 position)
@@ -79,13 +74,6 @@ namespace Heatmap
         protected Vector2 UnitSpaceToPixelSpace(Vector2 position)
         {
             return position / Receiver.SampleSize;
-        }
-
-        private void UpdateProgress()
-        {
-            float procentageDone = HeatMap.Count() / (float)(UnsampledSize.Width * UnsampledSize.Height);
-
-            Progress?.Invoke(this, new ProgressEventArgs(procentageDone));
         }
 
         public void Commit()

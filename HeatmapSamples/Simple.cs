@@ -2,15 +2,8 @@
 using Heatmap.Morphs;
 using Heatmap.Receivers;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HeatmapSamples
@@ -37,19 +30,6 @@ namespace HeatmapSamples
 
             Receiver = new BitmapBitwiseReceiver(pCanvas.ClientSize, new Size(20, 20));
             Heatmap = new HeatmapGenerator(CalculateFragment, morph, Receiver);
-
-            int progressUpdates = 0;
-
-            Heatmap.Progress += (o, e) =>
-            {
-                if (progressUpdates++ % 100 == 0)
-                {
-                    UpdateBitmap();
-                }
-
-                Text = string.Format("Progress {0:##0.0%}", e.ProcentageDone);
-                StopTime = DateTime.UtcNow;
-            };
         }
 
         private static float CalculateFragment(Vector2 vector)
