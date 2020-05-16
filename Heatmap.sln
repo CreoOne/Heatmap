@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatmapSamples", "HeatmapSamples\HeatmapSamples.csproj", "{53B25A62-4393-4E27-BAA3-6C48291EA0B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heatmap", "Heatmap\Heatmap.csproj", "{DBFA355B-7F58-47D5-9168-82829A7E3D81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heatmap", "Heatmap\Heatmap.csproj", "{75EAF02B-D7B4-48DE-8D3D-743EC839AB09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{53B25A62-4393-4E27-BAA3-6C48291EA0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53B25A62-4393-4E27-BAA3-6C48291EA0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53B25A62-4393-4E27-BAA3-6C48291EA0B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBFA355B-7F58-47D5-9168-82829A7E3D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBFA355B-7F58-47D5-9168-82829A7E3D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBFA355B-7F58-47D5-9168-82829A7E3D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBFA355B-7F58-47D5-9168-82829A7E3D81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75EAF02B-D7B4-48DE-8D3D-743EC839AB09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75EAF02B-D7B4-48DE-8D3D-743EC839AB09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75EAF02B-D7B4-48DE-8D3D-743EC839AB09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75EAF02B-D7B4-48DE-8D3D-743EC839AB09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
