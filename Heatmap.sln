@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap", "Heatmap\Heatmap.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.UnitTests", "Heatmap.UnitTests\Heatmap.UnitTests.csproj", "{9B7465BE-021F-4043-97AA-E6810F8907BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heatmap.Benchmarks", "Heatmap.Benchmarks\Heatmap.Benchmarks.csproj", "{79AAF323-79C3-42A9-9C4E-D2F56E8DA687}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9B7465BE-021F-4043-97AA-E6810F8907BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B7465BE-021F-4043-97AA-E6810F8907BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B7465BE-021F-4043-97AA-E6810F8907BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79AAF323-79C3-42A9-9C4E-D2F56E8DA687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79AAF323-79C3-42A9-9C4E-D2F56E8DA687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79AAF323-79C3-42A9-9C4E-D2F56E8DA687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79AAF323-79C3-42A9-9C4E-D2F56E8DA687}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
