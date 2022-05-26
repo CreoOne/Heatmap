@@ -1,4 +1,5 @@
-﻿using Heatmap.Morphs;
+﻿using Heatmap.Gradients;
+using Heatmap.Primitives;
 using Heatmap.Receivers;
 using System;
 using System.Collections.Generic;
@@ -13,28 +14,23 @@ namespace Heatmap
 
         private List<PatchHolder> HeatMap = new List<PatchHolder>();
 
-        private Vector2 ViewportMin = Vector2.Zero;
-        private Vector2 ViewportMax = Vector2.One;
+        private Viewport Viewport { get; set; }
         private float MinValue = float.MaxValue;
         private float MaxValue = float.MinValue;
         private Func<Vector2, float> Function;
-        private IMorph Morph;
+        private IGradient Gradient;
         private IReceiver Receiver;
 
-        public HeatmapAbstract(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
+        public HeatmapAbstract(Func<Vector2, float> function, IGradient gradient, IReceiver receiver)
         {
             Function = function ?? throw new ArgumentNullException(nameof(function));
-            Morph = morph ?? throw new ArgumentNullException(nameof(morph));
+            Gradient = gradient ?? throw new ArgumentNullException(nameof(gradient));
             Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
 
             RecalculateUnsampledSize();
         }
 
-        public void SetViewport(Vector2 min, Vector2 max)
-        {
-            ViewportMin = new Vector2(Math.Min(min.X, max.X), Math.Min(min.Y, max.Y));
-            ViewportMax = new Vector2(Math.Max(min.X, max.X), Math.Max(min.Y, max.Y));
-        }
+        public void SetViewport(Viewport viewport) => Viewport = viewport;
 
         private void RecalculateUnsampledSize()
         {
@@ -50,10 +46,7 @@ namespace Heatmap
             HeatMap = new List<PatchHolder>(UnsampledSize.Width * UnsampledSize.Height);
         }
 
-        protected float GetValue(Vector2 position)
-        {
-            return Function(ViewportMin + (ViewportMax - ViewportMin) * position);
-        }
+        protected float GetValue(Vector2 position) => Function(Viewport.From + (Viewport.To - Viewport.From) * position);
 
         protected void AddValue(Vector2 position, Vector2 size, float value)
         {
@@ -85,7 +78,7 @@ namespace Heatmap
 
             foreach (PatchHolder patch in HeatMap)
             {
-                Color color = Morph.GetColor((patch.Value - MinValue) / range);
+                var color = Gradient.GetColor((patch.Value - MinValue) / range);
                 Receiver.Receive(patch.Position, patch.Size, color);
             }
         }

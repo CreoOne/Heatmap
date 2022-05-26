@@ -1,4 +1,5 @@
 ﻿using Heatmap.Extensions;
+using Heatmap.Primitives;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -21,7 +22,7 @@ namespace Heatmap.Receivers
             Bytes = new byte[bitmapSize.Width * 4 * bitmapSize.Height];
         }
 
-        public void Receive(Vector2 position, Vector2 size, Color color)
+        public void Receive(Vector2 position, Vector2 size, RgbColor color)
         {
             Size bitmapSpaceSize = (size * BitmapSize.ToVector2()).Ceiling().ToSize();
             int index = PositionToIndex(position);
@@ -37,10 +38,9 @@ namespace Heatmap.Receivers
                     if (index + offset >= Bytes.Length)
                         return;
 
-                    Bytes[index + offset] = color.B;
-                    Bytes[index + offset + 1] = color.G;
-                    Bytes[index + offset + 2] = color.R;
-                    Bytes[index + offset + 3] = color.A;
+                    Bytes[index + offset] = color.Blue;
+                    Bytes[index + offset + 1] = color.Green;
+                    Bytes[index + offset + 2] = color.Red;
                 }
         }
 
@@ -51,7 +51,7 @@ namespace Heatmap.Receivers
 
         public Bitmap ProduceBitmap()
         {
-            Bitmap result = new Bitmap(BitmapSize.Width, BitmapSize.Height, PixelFormat.Format32bppArgb);
+            Bitmap result = new Bitmap(BitmapSize.Width, BitmapSize.Height, PixelFormat.Format24bppRgb);
             BitmapData resultData = result.LockBits(new Rectangle(0, 0, BitmapSize.Width, BitmapSize.Height), ImageLockMode.WriteOnly, result.PixelFormat);
 
             System.Runtime.InteropServices.Marshal.Copy(Bytes, 0, resultData.Scan0, Bytes.Length);

@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using Heatmap.Primitives;
 
 namespace Heatmap.Gradients
 {
     public interface IGradient
     {
-        Color GetColor(float position);
+        RgbColor GetColor(float position);
     }
 }

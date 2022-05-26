@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using Heatmap.Primitives;
 using System.Numerics;
 
 namespace Heatmap.Receivers
@@ -7,6 +7,6 @@ namespace Heatmap.Receivers
     {
         Vector2 SampleSize { get; }
 
-        void Receive(Vector2 position, Vector2 size, Color color);
+        void Receive(Vector2 position, Vector2 size, RgbColor color);
     }
 }

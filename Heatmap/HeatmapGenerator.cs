@@ -1,4 +1,4 @@
-﻿using Heatmap.Morphs;
+﻿using Heatmap.Gradients;
 using Heatmap.Receivers;
 using System;
 using System.Linq;
@@ -8,8 +8,8 @@ namespace Heatmap
 {
     public class HeatmapGenerator : HeatmapAbstract
     {
-        public HeatmapGenerator(Func<Vector2, float> function, IMorph morph, IReceiver receiver)
-            : base(function, morph, receiver) { }
+        public HeatmapGenerator(Func<Vector2, float> function, IGradient gradient, IReceiver receiver)
+            : base(function, gradient, receiver) { }
 
         public override void Calculate()
         {

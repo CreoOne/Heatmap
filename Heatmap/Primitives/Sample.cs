@@ -2,7 +2,7 @@
 
 namespace Heatmap.Primitives
 {
-    public struct Sample
+    public readonly struct Sample
     {
         public Vector2 Position { get; }
         public float Value { get; }

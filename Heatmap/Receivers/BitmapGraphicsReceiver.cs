@@ -1,11 +1,12 @@
 ﻿using Heatmap.Extensions;
+using Heatmap.Primitives;
 using System;
 using System.Drawing;
 using System.Numerics;
 
 namespace Heatmap.Receivers
 {
-    public class BitmapGraphicsReceiver : IReceiver, IDisposable
+    public sealed class BitmapGraphicsReceiver : IReceiver, IDisposable
     {
         public Vector2 SampleSize { get; private set; }
         private Vector2 BitmapSize;
@@ -24,19 +25,16 @@ namespace Heatmap.Receivers
             SampleSize = sampleSize.ToVector2() / bitmapSize.ToVector2();
         }
 
-        public void Receive(Vector2 position, Vector2 size, Color color)
+        public void Receive(Vector2 position, Vector2 size, RgbColor color)
         {
             Vector2 bitmapPosition = position * BitmapSize;
             Vector2 bitmapSize = size * BitmapSize;
 
-            using (Brush brush = new SolidBrush(color))
-                Context.FillRectangle(brush, bitmapPosition.X, bitmapPosition.Y, bitmapSize.X, bitmapSize.Y);
+            using Brush brush = new SolidBrush(Color.FromArgb(color.Red, color.Green, color.Blue));
+            Context.FillRectangle(brush, bitmapPosition.X, bitmapPosition.Y, bitmapSize.X, bitmapSize.Y);
         }
 
-        public Bitmap ProduceBitmap()
-        {
-            return Result;
-        }
+        public Bitmap ProduceBitmap() => Result;
 
         public void Dispose()
         {

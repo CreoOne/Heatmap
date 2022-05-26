@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Heatmap.Primitives
 {
-    public struct Viewport
+    public readonly struct Viewport
     {
         public Vector2 From { get; }
         public Vector2 To { get; }
