@@ -22,9 +22,13 @@ namespace Heatmap.Receivers
             Bytes = new byte[bitmapSize.Width * 4 * bitmapSize.Height];
         }
 
+        private static Vector2 Ceiling(Vector2 self) => new((float)Math.Ceiling(self.X), (float)Math.Ceiling(self.Y));
+
+        public static Size ToSize(Vector2 self) => new((int)self.X, (int)self.Y);
+
         public void Receive(Vector2 position, Vector2 size, RgbColor color)
         {
-            Size bitmapSpaceSize = (size * BitmapSize.ToVector2()).Ceiling().ToSize();
+            Size bitmapSpaceSize = ToSize(Ceiling(size * BitmapSize.ToVector2()));
             int index = PositionToIndex(position);
 
             foreach (int y in Enumerable.Range(0, bitmapSpaceSize.Height))
@@ -44,10 +48,7 @@ namespace Heatmap.Receivers
                 }
         }
 
-        private int PositionToIndex(Vector2 position)
-        {
-            return (int)(Math.Round(position.Y * BitmapSize.Height * BitmapSize.Width + position.X * BitmapSize.Width) * 4);
-        }
+        private int PositionToIndex(Vector2 position) => (int)(Math.Round(position.Y * BitmapSize.Height * BitmapSize.Width + position.X * BitmapSize.Width) * 4);
 
         public Bitmap ProduceBitmap()
         {
