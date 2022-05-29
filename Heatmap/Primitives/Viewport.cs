@@ -13,5 +13,7 @@ namespace Heatmap.Primitives
             From = new Vector2(Math.Min(from.X, to.X), Math.Min(from.Y, to.Y));
             To = new Vector2(Math.Max(from.X, to.X), Math.Max(from.Y, to.Y));
         }
+
+        public Vector2 GetViewPoint(Vector2 unitPosition) => From + (To - From) * unitPosition;
     }
 }

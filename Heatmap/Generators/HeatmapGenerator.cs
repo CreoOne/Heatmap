@@ -2,64 +2,53 @@
 using Heatmap.Primitives;
 using Heatmap.Range;
 using Heatmap.Receivers;
+using Heatmap.Samplers;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace Heatmap.Generators
 {
     public sealed class HeatmapGenerator : IHeatmapGenerator
     {
-        private Func<Vector2, float> Sampler { get; }
-        private IGradient Gradient { get; }
-        private IReceiver Receiver { get; }
+        private ISampler Sampler { get; }
+        private ConcurrentBag<Fragment> Fragments { get; } = new();
 
-        public HeatmapGenerator(Func<Vector2, float> sampler, IGradient gradient, IReceiver receiver)
+        public HeatmapGenerator(ISampler sampler)
         {
             Sampler = sampler ?? throw new ArgumentNullException(nameof(sampler));
-            Gradient = gradient ?? throw new ArgumentNullException(nameof(gradient));
-            Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
         }
 
-        public void Generate(Viewport viewport, IRangeFactory rangeFactory)
+        public async Task SampleAsync(Viewport viewport, Vector2 resolution)
         {
-            List<Fragment> fragments = new();
-            var minValue = float.MaxValue;
-            var maxValue = float.MinValue;
-            var sampledResolution = CalculateResolution(Receiver.SampleSize);
-            var sampleSize = PixelSpaceToUnitSpace(Vector2.One);
+            Fragments.Clear();
 
-            foreach (int y in Enumerable.Range(0, sampledResolution.Height))
-                foreach (int x in Enumerable.Range(0, sampledResolution.Width))
+            var sampleSize = new Vector2(1f) / resolution;
+
+            foreach (int y in Enumerable.Range(0, (int)resolution.Y))
+                foreach (int x in Enumerable.Range(0, (int)resolution.X))
                 {
-                    Vector2 position = PixelSpaceToUnitSpace(new Vector2(x, y));
-                    var viewPoint = viewport.From + (viewport.To - viewport.From) * position;
-                    var sample = Sampler(viewPoint);
+                    Vector2 unitPosition = new Vector2(x, y) / resolution;
+                    var viewPoint = viewport.GetViewPoint(unitPosition);
+                    var sample = await Sampler.GetAsync(viewPoint);
 
-                    fragments.Add(new Fragment(position, sampleSize, sample));
+                    Fragments.Add(new Fragment(unitPosition, sampleSize, sample));
+                }   
+        }
 
-                    minValue = Math.Min(minValue, sample);
-                    maxValue = Math.Max(maxValue, sample);
-                }
-
-            var range = rangeFactory.Create(minValue, maxValue);
-
-            foreach (Fragment fragment in fragments)
+        public async Task PushAsync(IRange range, IGradient gradient, IReceiver receiver)
+        {
+            foreach (Fragment fragment in GetFragments())
             {
                 var rangedFragment = range.GetValue(fragment.Value);
-                var color = Gradient.GetColor(rangedFragment);
-                Receiver.Receive(fragment.Position, fragment.Size, color);
+                var color = gradient.GetColor(rangedFragment);
+                await receiver.ReceiveAsync(fragment.Position, fragment.Size, color);
             }
         }
 
-        private static (int Width, int Height) CalculateResolution(Vector2 sampleSize)
-        {
-            int width = (int)(1 / sampleSize.X);
-            int height = (int)(1 / sampleSize.Y);
-            return new(width, height);
-        }
-
-        private Vector2 PixelSpaceToUnitSpace(Vector2 position) => position * Receiver.SampleSize;
+        public IEnumerable<Fragment> GetFragments() => Fragments.ToArray();
     }
 }

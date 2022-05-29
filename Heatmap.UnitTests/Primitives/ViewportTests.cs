@@ -31,5 +31,18 @@ namespace Heatmap.UnitTests.Primitives
             // Assert
             Assert.Equal(new Vector2(4f, 3f), result);
         }
+
+        [Fact]
+        public void GivenCorrectInputDataWhenGetViewPointThenCorrectValue()
+        {
+            // Arrange
+            var viewport = new Viewport(new Vector2(2f), new Vector2(3f));
+
+            // Act
+            var actual = viewport.GetViewPoint(new Vector2(0.25f, 0.75f));
+
+            // Assert
+            Assert.Equal(new Vector2(2.25f, 2.75f), actual);
+        }
     }
 }
