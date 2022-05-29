@@ -1,6 +1,6 @@
-﻿using Heatmap.Primitives;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Heatmap.Extensions;
+using Heatmap.Primitives;
+using System;
 
 namespace Heatmap.Gradients
 {
@@ -8,39 +8,37 @@ namespace Heatmap.Gradients
     {
         private const float MinColorEpsilon = 1 / 255f;
         private const float MaxColorEpsilon = 254 / 255f;
-        private float PartSize;
+        private readonly float PartSize;
 
-        private PositionedColor[] Colors { get; }
+        private RgbColor[] Colors { get; }
 
-        public LinearGradient(IEnumerable<PositionedColor> positionedColors)
+        public LinearGradient(params RgbColor[] colors)
         {
-            Colors = positionedColors.OrderBy(positionedColor => positionedColor).ToArray();
+            if (colors.Length < 2)
+                throw new ArgumentException($"Not enough colors, at least two expected, {colors.Length} given", nameof(colors));
+
+            Colors = colors;
+            PartSize = 1f / (Colors.Length - 1);
         }
 
         public RgbColor GetColor(float position)
         {
+            position = position.Clamp(0, 1);
+
             int index = (int)(position / PartSize);
             float offset = (position - index * PartSize) / PartSize;
 
             var first = Colors[index];
 
             if (offset < MinColorEpsilon)
-                return first.Color;
+                return first;
 
             var second = Colors[index + 1];
 
             if (offset > MaxColorEpsilon)
-                return second.Color;
+                return second;
 
-            return Lerp(first.Color, second.Color, offset);
+            return RgbColor.Lerp(first, second, offset);
         }
-
-        private static RgbColor Lerp(RgbColor q, RgbColor r, float position) => new(
-                (byte)Lerp(q.Red, r.Red, position),
-                (byte)Lerp(q.Green, r.Green, position),
-                (byte)Lerp(q.Blue, r.Blue, position)
-            );
-
-        private static float Lerp(float q, float r, float position) => q + (r - q) * position;
     }
 }

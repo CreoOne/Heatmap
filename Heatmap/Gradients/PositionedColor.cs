@@ -14,6 +14,6 @@ namespace Heatmap.Gradients
             Color = color;
         }
 
-        public int CompareTo(PositionedColor other) => Position.CompareTo(other.Color);
+        public int CompareTo(PositionedColor other) => Position.CompareTo(other.Position);
     }
 }
