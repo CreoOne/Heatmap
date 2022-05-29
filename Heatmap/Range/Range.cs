@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Heatmap.Extensions;
 
 namespace Heatmap.Range
 {
@@ -15,8 +15,6 @@ namespace Heatmap.Range
             Length = Max - Min;
         }
 
-        public float GetValue(float value) => Clamp((value - Min) / Length, Min, Max);
-
-        private float Clamp(float value, float min, float max) => MathF.Max(min, MathF.Min(value, max));
+        public float GetValue(float value) => ((value - Min) / Length).Clamp(Min, Max);
     }
 }
