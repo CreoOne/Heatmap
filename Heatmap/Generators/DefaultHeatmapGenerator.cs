@@ -34,7 +34,9 @@ namespace Heatmap.Generators
 
         public void Push(IRange range, IGradient gradient, IReceiver receiver)
         {
-            foreach (PositionedSample positionedSample in GetPositionedSamples())
+            var positionedSamples = GetPositionedSamples();
+
+            foreach (PositionedSample positionedSample in positionedSamples)
             {
                 var rangedFragment = range.GetValue(positionedSample.Value);
                 var color = gradient.GetColor(rangedFragment);

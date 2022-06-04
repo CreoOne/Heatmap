@@ -1,5 +1,6 @@
 ﻿using Heatmap.Gradients;
 using Heatmap.Primitives;
+using Heatmap.Range;
 using Heatmap.Samplers;
 using Heatmap.SkiaSharp.Receivers;
 using System.Numerics;
@@ -14,6 +15,7 @@ public class Program
     {
         await Ripple();
         await Rastrigin();
+        await Function();
     }
 
     public async static Task Ripple()
@@ -61,6 +63,32 @@ public class Program
             .GenerateAsync();
 
         await SaveAsync(await receiver.GetPngStreamAsync(400, 400), nameof(Rastrigin));
+    }
+
+    public async static Task Function()
+    {
+        static float Func(Vector2 position) => MathF.Exp(-MathF.Abs(position.X)) * MathF.Sin(position.X) * 6f;
+
+        var sampler = new LambdaSampler(Func);
+        var receiver = new SkiaSharpReceiver();
+
+        var gradient = new PositionedGradient(new[] {
+            new PositionedColor(0, new RgbColor(0, 255, 255)), // cold over-exposure
+            new PositionedColor(0.2f, new RgbColor(0, 128, 128)),
+            new PositionedColor(0.8f, new RgbColor(128, 0, 0)),
+            new PositionedColor(1f, new RgbColor(255, 0, 0)) // hot over-exposure
+        });
+
+        await new DefaultHeatmapBuilder()
+            .SetSampler(sampler)
+            .SetReceiver(receiver)
+            .SetViewport(new Viewport(new Vector2(-4), new Vector2(4)))
+            .SetSamplingResolution(new Vector2(200, 1))
+            .SetGradient(gradient)
+            .SetRangeFactory(new ConstantRangeFactory(-1.5f, 1.5f)) // cut off
+            .GenerateAsync();
+
+        await SaveAsync(await receiver.GetPngStreamAsync(400, 20), nameof(Function));
     }
 
     private static async Task SaveAsync(Stream stream, string name)
