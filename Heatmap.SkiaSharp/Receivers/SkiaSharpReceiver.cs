@@ -14,20 +14,20 @@ namespace Heatmap.SkiaSharp.Receivers
 
         public Task<Stream> GetPngStreamAsync(int width, int height)
         {
-            throw new NotImplementedException();
-
             using SKBitmap bitmap = new(width, height, SKColorType.Rgba8888, SKAlphaType.Unpremul);
-            IntPtr pixelsAddr = bitmap.GetPixels();
-
-            unsafe
+            
+            foreach (var fragment in Fragments)
             {
-                uint* ptr = (uint*)pixelsAddr.ToPointer();
+                var halfFragment = fragment.Size / 2f;
+                var x = (int)((fragment.Position.X - halfFragment.X) * width);
+                var y = (int)((fragment.Position.Y - halfFragment.Y) * height);
 
-                var color = new RgbColor(0, 0, 0);
+                var pixelsX = (int)Math.Ceiling(fragment.Size.X * width);
+                var pixelsY = (int)Math.Ceiling(fragment.Size.Y * height);
 
-                for (int y = 0; y < height; y++)
-                    for (int x = 0; x < width; x++)
-                        *ptr++ = ColorToUint(color);
+                for (var offsetX = 0; offsetX < pixelsX; offsetX++)
+                    for (var offsetY = 0; offsetY < pixelsY; offsetY++)
+                        bitmap.SetPixel(x + offsetX, y + offsetY, ConvertColor(fragment.Color));
             }
 
             var data = bitmap.Encode(SKEncodedImageFormat.Png, 100);
@@ -35,6 +35,7 @@ namespace Heatmap.SkiaSharp.Receivers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static uint ColorToUint(RgbColor color) => (uint)((/*color.Alpha*/255 << 24) | (color.Blue << 16) | (color.Green << 8) | color.Red);
+        //private static SKColor ConvertColor(RgbColor color) => (uint)((/*color.Alpha*/255 << 24) | (color.Blue << 16) | (color.Green << 8) | color.Red);
+        private static SKColor ConvertColor(RgbColor color) => new(color.Red, color.Green, color.Blue);
     }
 }
