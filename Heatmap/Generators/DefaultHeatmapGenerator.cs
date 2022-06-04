@@ -3,7 +3,6 @@ using Heatmap.Primitives;
 using Heatmap.Range;
 using Heatmap.Receivers;
 using Heatmap.Samplers;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +11,11 @@ using System.Threading.Tasks;
 
 namespace Heatmap.Generators
 {
-    public sealed class HeatmapGenerator : IHeatmapGenerator
+    public sealed class DefaultHeatmapGenerator : IHeatmapGenerator
     {
-        private ISampler Sampler { get; }
         private ConcurrentBag<PositionedSample> PositionedSamples { get; } = new();
 
-        public HeatmapGenerator(ISampler sampler)
-        {
-            Sampler = sampler ?? throw new ArgumentNullException(nameof(sampler));
-        }
-
-        public async Task SampleAsync(Viewport viewport, Vector2 resolution)
+        public async Task SampleAsync(ISampler sampler, Viewport viewport, Vector2 resolution)
         {
             PositionedSamples.Clear();
 
@@ -33,7 +26,7 @@ namespace Heatmap.Generators
                 {
                     Vector2 unitPosition = new Vector2(x, y) / resolution;
                     var viewPoint = viewport.GetViewPoint(unitPosition);
-                    var sample = await Sampler.GetAsync(viewPoint);
+                    var sample = await sampler.GetAsync(viewPoint);
 
                     PositionedSamples.Add(new PositionedSample(unitPosition, sampleSize, sample));
                 }   
