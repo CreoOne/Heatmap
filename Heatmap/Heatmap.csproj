@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="system.drawing.common" Version="4.7.0" />
     <PackageReference Include="system.numerics.vectors" Version="4.5.0" />
   </ItemGroup>
 

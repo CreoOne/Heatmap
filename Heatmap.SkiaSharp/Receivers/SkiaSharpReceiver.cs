@@ -2,6 +2,7 @@
 using Heatmap.Receivers;
 using SkiaSharp;
 using System.Collections.Concurrent;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace Heatmap.SkiaSharp.Receivers
@@ -15,19 +16,22 @@ namespace Heatmap.SkiaSharp.Receivers
         public Task<Stream> GetPngStreamAsync(int width, int height)
         {
             using SKBitmap bitmap = new(width, height, SKColorType.Rgba8888, SKAlphaType.Unpremul);
-            
+            var size = new Vector2(width, height);
+
             foreach (var fragment in Fragments)
             {
-                var halfFragment = fragment.Size / 2f;
-                var x = (int)((fragment.Position.X - halfFragment.X) * width);
-                var y = (int)((fragment.Position.Y - halfFragment.Y) * height);
+                var basePosition = fragment.Position * size;
+                var pixelSize = fragment.Size * size;
 
-                var pixelsX = (int)Math.Ceiling(fragment.Size.X * width);
-                var pixelsY = (int)Math.Ceiling(fragment.Size.Y * height);
+                for (var offsetX = 0; offsetX < Math.Ceiling(pixelSize.X); offsetX++)
+                    for (var offsetY = 0; offsetY < Math.Ceiling(pixelSize.Y); offsetY++)
+                    {
+                        var offset = new Vector2(offsetX, offsetY);
+                        var shifted = basePosition + offset;
 
-                for (var offsetX = 0; offsetX < pixelsX; offsetX++)
-                    for (var offsetY = 0; offsetY < pixelsY; offsetY++)
-                        bitmap.SetPixel(x + offsetX, y + offsetY, ConvertColor(fragment.Color));
+                        if(shifted.X >= 0 && shifted.Y >= 0 && shifted.X < width && shifted.Y < height)
+                            bitmap.SetPixel((int)Math.Round(shifted.X), (int)Math.Round(shifted.Y), ConvertColor(fragment.Color));
+                    }
             }
 
             var data = bitmap.Encode(SKEncodedImageFormat.Png, 100);
