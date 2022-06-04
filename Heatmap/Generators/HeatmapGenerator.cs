@@ -15,7 +15,7 @@ namespace Heatmap.Generators
     public sealed class HeatmapGenerator : IHeatmapGenerator
     {
         private ISampler Sampler { get; }
-        private ConcurrentBag<Fragment> Fragments { get; } = new();
+        private ConcurrentBag<PositionedSample> PositionedSamples { get; } = new();
 
         public HeatmapGenerator(ISampler sampler)
         {
@@ -24,7 +24,7 @@ namespace Heatmap.Generators
 
         public async Task SampleAsync(Viewport viewport, Vector2 resolution)
         {
-            Fragments.Clear();
+            PositionedSamples.Clear();
 
             var sampleSize = new Vector2(1f) / resolution;
 
@@ -35,20 +35,20 @@ namespace Heatmap.Generators
                     var viewPoint = viewport.GetViewPoint(unitPosition);
                     var sample = await Sampler.GetAsync(viewPoint);
 
-                    Fragments.Add(new Fragment(unitPosition, sampleSize, sample));
+                    PositionedSamples.Add(new PositionedSample(unitPosition, sampleSize, sample));
                 }   
         }
 
-        public async Task PushAsync(IRange range, IGradient gradient, IReceiver receiver)
+        public void Push(IRange range, IGradient gradient, IReceiver receiver)
         {
-            foreach (Fragment fragment in GetFragments())
+            foreach (PositionedSample positionedSample in GetPositionedSamples())
             {
-                var rangedFragment = range.GetValue(fragment.Value);
+                var rangedFragment = range.GetValue(positionedSample.Value);
                 var color = gradient.GetColor(rangedFragment);
-                await receiver.ReceiveAsync(fragment.Position, fragment.Size, color);
+                receiver.Receive(Fragment.FromPositionedSample(positionedSample, color));
             }
         }
 
-        public IEnumerable<Fragment> GetFragments() => Fragments.ToArray();
+        public IEnumerable<PositionedSample> GetPositionedSamples() => PositionedSamples.ToArray();
     }
 }

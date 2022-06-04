@@ -6,13 +6,15 @@ namespace Heatmap.Primitives
     {
         public Vector2 Position { get; }
         public Vector2 Size { get; }
-        public float Value { get; }
+        public RgbColor Color { get; }
 
-        public Fragment(Vector2 position, Vector2 size, float value)
+        public Fragment(Vector2 position, Vector2 size, RgbColor color)
         {
             Position = position;
             Size = size;
-            Value = value;
+            Color = color;
         }
+
+        internal static Fragment FromPositionedSample(PositionedSample positionedSample, RgbColor color) => new(positionedSample.Position, positionedSample.Size, color);
     }
 }

@@ -10,6 +10,6 @@ namespace Heatmap.Generators
     public interface IHeatmapGenerator
     {
         Task SampleAsync(Viewport viewport, Vector2 resolution);
-        Task PushAsync(IRange range, IGradient gradient, IReceiver receiver);
+        void Push(IRange range, IGradient gradient, IReceiver receiver);
     }
 }
