@@ -9,10 +9,10 @@ namespace Heatmap.UnitTests.Primitives
         public void GivenCorrectInputDataWhenRetrievingFromThenCorrectValue()
         {
             // Arrange
-            var viewport = new Viewport(new Vector2(4f, 1f), new Vector2(2f, 3f));
+            var viewport = Viewport.FromTwoPoints(new Vector2(4f, 1f), new Vector2(2f, 3f));
 
             // Act
-            var result = viewport.From;
+            var result = viewport.Min;
 
             // Assert
             Assert.Equal(new Vector2(2f, 1f), result);
@@ -22,10 +22,10 @@ namespace Heatmap.UnitTests.Primitives
         public void GivenCorrectInputDataWhenRetrievingToThenCorrectValue()
         {
             // Arrange
-            var viewport = new Viewport(new Vector2(4f, 1f), new Vector2(2f, 3f));
+            var viewport = Viewport.FromTwoPoints(new Vector2(4f, 1f), new Vector2(2f, 3f));
 
             // Act
-            var result = viewport.To;
+            var result = viewport.Max;
 
             // Assert
             Assert.Equal(new Vector2(4f, 3f), result);
@@ -35,7 +35,7 @@ namespace Heatmap.UnitTests.Primitives
         public void GivenCorrectInputDataWhenGetViewPointThenCorrectValue()
         {
             // Arrange
-            var viewport = new Viewport(new Vector2(2f), new Vector2(3f));
+            var viewport = Viewport.FromTwoPoints(new Vector2(2f), new Vector2(3f));
 
             // Act
             var actual = viewport.GetViewPoint(new Vector2(0.25f, 0.75f));

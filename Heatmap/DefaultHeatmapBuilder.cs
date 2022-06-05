@@ -20,7 +20,7 @@ namespace Heatmap
             return this;
         }
 
-        private Viewport Viewport { get; set; } = new Viewport(new Vector2(-1), new Vector2(1));
+        private Viewport Viewport { get; set; } = Viewport.FromTwoPoints(new Vector2(-1), new Vector2(1));
 
         public DefaultHeatmapBuilder SetViewport(Viewport viewport)
         {

@@ -59,7 +59,7 @@ public class Program
         await new DefaultHeatmapBuilder()
             .SetSampler(sampler)
             .SetReceiver(receiver)
-            .SetViewport(new Viewport(new Vector2(-5.12f), new Vector2(5.12f)))
+            .SetViewport(Viewport.FromTwoPoints(new Vector2(-5.12f), new Vector2(5.12f)))
             .SetSamplingResolution(new Vector2(400, 400))
             .SetGradient(gradient)
             .GenerateAsync();
@@ -84,7 +84,7 @@ public class Program
         await new DefaultHeatmapBuilder()
             .SetSampler(sampler)
             .SetReceiver(receiver)
-            .SetViewport(new Viewport(new Vector2(-4), new Vector2(4)))
+            .SetViewport(Viewport.FromTwoPoints(new Vector2(-4), new Vector2(4)))
             .SetSamplingResolution(new Vector2(200, 1))
             .SetGradient(gradient)
             .SetRangeFactory(new ConstantRangeFactory(-1.5f, 1.5f)) // cut off
@@ -105,7 +105,7 @@ public class Program
         await new DefaultHeatmapBuilder()
             .SetSampler(sampler)
             .SetReceiver(receiver)
-            .SetViewport(new Viewport(new Vector2(0), new Vector2(1)))
+            .SetViewport(Viewport.FromTwoPoints(new Vector2(0), new Vector2(1)))
             .SetSamplingResolution(new Vector2(barcodeData.Length, 1))
             .GenerateAsync();
 
