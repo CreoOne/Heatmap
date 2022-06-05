@@ -6,13 +6,13 @@ namespace Heatmap.Samplers
 {
     public sealed class LambdaSampler : ISampler
     {
-        private Func<Vector2, float> Lambda { get; }
+        private Func<Vector2, double> Lambda { get; }
 
-        public LambdaSampler(Func<Vector2, float> lambda)
+        public LambdaSampler(Func<Vector2, double> lambda)
         {
             Lambda = lambda;
         }
 
-        public Task<float> GetAsync(Vector2 position) => Task.FromResult(Lambda(position));
+        public Task<double> GetAsync(Vector2 position) => Task.FromResult(Lambda(position));
     }
 }

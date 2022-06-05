@@ -22,7 +22,7 @@ public class Program
 
     public async static Task Ripple()
     {
-        static float Func(Vector2 position) => MathF.Cos((Vector2.Zero - position).Length() * 20f);
+        static double Func(Vector2 position) => Math.Cos((Vector2.Zero - position).Length() * 20d);
 
         var sampler = new LambdaSampler(Func);
         var receiver = new SkiaSharpReceiver();
@@ -40,7 +40,7 @@ public class Program
     /// </summary>
     public async static Task Rastrigin()
     {
-        static float Func(Vector2 position) => 10 * 2 + MathF.Pow(position.X, 2) + MathF.Pow(position.Y, 2) - 10 * MathF.Cos(2 * MathF.PI * position.X) - 10 * MathF.Cos(2 * MathF.PI * position.Y);
+        static double Func(Vector2 position) => 10 * 2 + Math.Pow(position.X, 2) + Math.Pow(position.Y, 2) - 10 * Math.Cos(2 * Math.PI * position.X) - 10 * Math.Cos(2 * Math.PI * position.Y);
 
         var sampler = new LambdaSampler(Func);
         var receiver = new SkiaSharpReceiver();
@@ -69,7 +69,7 @@ public class Program
 
     public async static Task Function()
     {
-        static float Func(Vector2 position) => MathF.Exp(-MathF.Abs(position.X)) * MathF.Sin(position.X) * 6f;
+        static double Func(Vector2 position) => Math.Exp(-Math.Abs(position.X)) * Math.Sin(position.X) * 6f;
 
         var sampler = new LambdaSampler(Func);
         var receiver = new SkiaSharpReceiver();
@@ -97,7 +97,7 @@ public class Program
     {
         var random = new Random();
         var barcodeData = Enumerable.Range(0, 128).Select(_ => random.Next(0, 2)).ToArray();
-        float Func(Vector2 position) => barcodeData[(int)(position.X * barcodeData.Length)];
+        double Func(Vector2 position) => barcodeData[(int)(position.X * barcodeData.Length)];
 
         var sampler = new LambdaSampler(Func);
         var receiver = new SkiaSharpReceiver();

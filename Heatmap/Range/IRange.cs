@@ -2,6 +2,6 @@
 {
     public interface IRange
     {
-        float GetValue(float value);
+        double GetValue(double value);
     }
 }

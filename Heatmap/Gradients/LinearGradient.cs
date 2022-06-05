@@ -6,9 +6,9 @@ namespace Heatmap.Gradients
 {
     public class LinearGradient : IGradient
     {
-        private const float MinColorEpsilon = 1 / 255f;
-        private const float MaxColorEpsilon = 254 / 255f;
-        private readonly float PartSize;
+        private const double MinColorEpsilon = 1 / 255d;
+        private const double MaxColorEpsilon = 254 / 255d;
+        private readonly double PartSize;
 
         private RgbColor[] Colors { get; }
 
@@ -18,15 +18,15 @@ namespace Heatmap.Gradients
                 throw new ArgumentException($"Not enough colors, at least two expected, {colors.Length} given", nameof(colors));
 
             Colors = colors;
-            PartSize = 1f / (Colors.Length - 1);
+            PartSize = 1d / (Colors.Length - 1);
         }
 
-        public RgbColor GetColor(float position)
+        public RgbColor GetColor(double position)
         {
             position = position.Clamp(0, 1);
 
             int index = (int)(position / PartSize);
-            float offset = (position - index * PartSize) / PartSize;
+            double offset = (position - index * PartSize) / PartSize;
 
             var first = Colors[index];
 

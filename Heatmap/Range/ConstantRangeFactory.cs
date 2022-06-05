@@ -4,15 +4,15 @@ namespace Heatmap.Range
 {
     public class ConstantRangeFactory : IRangeFactory
     {
-        public float Min { get; }
-        public float Max{ get; }
+        public double Min { get; }
+        public double Max{ get; }
 
-        public ConstantRangeFactory(float min, float max)
+        public ConstantRangeFactory(double min, double max)
         {
             Min = min;
             Max = max;
         }
 
-        public IRange Create(IEnumerable<float> _) => new ConstantRange(Min, Max);
+        public IRange Create(IEnumerable<double> _) => new ConstantRange(Min, Max);
     }
 }

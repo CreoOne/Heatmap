@@ -5,6 +5,6 @@ namespace Heatmap.Range
 {
     public sealed class AdaptiveRange : Range
     {
-        public AdaptiveRange(IEnumerable<float> values) : base(values.Min(), values.Max()) { }
+        public AdaptiveRange(IEnumerable<double> values) : base(values.Min(), values.Max()) { }
     }
 }

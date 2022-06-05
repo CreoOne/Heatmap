@@ -6,9 +6,9 @@ namespace Heatmap.Primitives
     {
         public Vector2 Position { get; }
         public Vector2 Size { get; }
-        public float Value { get; }
+        public double Value { get; }
 
-        public PositionedSample(Vector2 position, Vector2 size, float value)
+        public PositionedSample(Vector2 position, Vector2 size, double value)
         {
             Position = position;
             Size = size;

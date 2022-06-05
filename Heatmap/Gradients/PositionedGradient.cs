@@ -13,7 +13,7 @@ namespace Heatmap.Gradients
             PositionedColors = positionedColors.OrderBy(positionedColor => positionedColor).ToArray();
         }
 
-        public RgbColor GetColor(float position)
+        public RgbColor GetColor(double position)
         {
             for (var index = 0; index < PositionedColors.Length; index++)
             {

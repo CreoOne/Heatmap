@@ -4,17 +4,17 @@ namespace Heatmap.Range
 {
     public abstract class Range : IRange
     {
-        private float Min { get; }
-        private float Max { get; }
-        private float Length { get; }
+        private double Min { get; }
+        private double Max { get; }
+        private double Length { get; }
 
-        public Range(float min, float max)
+        public Range(double min, double max)
         {
             Min = min;
             Max = max;
             Length = Max - Min;
         }
 
-        public float GetValue(float value) => ((value - Min) / Length).Clamp(Min, Max);
+        public double GetValue(double value) => ((value - Min) / Length).Clamp(Min, Max);
     }
 }

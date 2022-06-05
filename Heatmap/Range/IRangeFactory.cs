@@ -4,6 +4,6 @@ namespace Heatmap.Range
 {
     public interface IRangeFactory
     {
-        IRange Create(IEnumerable<float> values);
+        IRange Create(IEnumerable<double> values);
     }
 }

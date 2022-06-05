@@ -4,6 +4,6 @@ namespace Heatmap.Gradients
 {
     public interface IGradient
     {
-        RgbColor GetColor(float position);
+        RgbColor GetColor(double position);
     }
 }

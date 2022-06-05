@@ -5,10 +5,10 @@ namespace Heatmap.Gradients
 {
     public struct PositionedColor : IComparable<PositionedColor>
     {
-        public float Position { get; }
+        public double Position { get; }
         public RgbColor Color { get; }
 
-        public PositionedColor(float position, RgbColor color)
+        public PositionedColor(double position, RgbColor color)
         {
             Position = position;
             Color = color;

@@ -5,6 +5,6 @@ namespace Heatmap.Samplers
 {
     public interface ISampler
     {
-        Task<float> GetAsync(Vector2 position);
+        Task<double> GetAsync(Vector2 position);
     }
 }
