@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.UnitTests", "Heatma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.Benchmarks", "Heatmap.Benchmarks\Heatmap.Benchmarks.csproj", "{79AAF323-79C3-42A9-9C4E-D2F56E8DA687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heatmap.SkiaSharp", "Heatmap.SkiaSharp\Heatmap.SkiaSharp.csproj", "{1E0BBFB8-7316-4315-990E-39C4FEF107E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.SkiaSharp", "Heatmap.SkiaSharp\Heatmap.SkiaSharp.csproj", "{1E0BBFB8-7316-4315-990E-39C4FEF107E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heatmap.Samples", "Heatmap.Samples\Heatmap.Samples.csproj", "{0A7623F2-A164-416D-B300-C2F5A49C815D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.Samples", "Heatmap.Samples\Heatmap.Samples.csproj", "{0A7623F2-A164-416D-B300-C2F5A49C815D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heatmap.FunctionalTests", "Heatmap.FunctionalTests\Heatmap.FunctionalTests.csproj", "{D38BE46A-C71C-4A14-A62D-78AE81F6A333}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{0A7623F2-A164-416D-B300-C2F5A49C815D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A7623F2-A164-416D-B300-C2F5A49C815D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A7623F2-A164-416D-B300-C2F5A49C815D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38BE46A-C71C-4A14-A62D-78AE81F6A333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38BE46A-C71C-4A14-A62D-78AE81F6A333}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38BE46A-C71C-4A14-A62D-78AE81F6A333}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38BE46A-C71C-4A14-A62D-78AE81F6A333}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,6 @@
 ﻿using Heatmap.Gradients;
 using Heatmap.Primitives;
 using System.Collections.Generic;
-using Xunit;
 
 namespace Heatmap.UnitTests.Gradients
 {

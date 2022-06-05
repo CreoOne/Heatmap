@@ -1,5 +1,4 @@
-﻿using Xunit;
-using Heatmap.Primitives;
+﻿using Heatmap.Primitives;
 using System.Numerics;
 
 namespace Heatmap.UnitTests.Primitives
