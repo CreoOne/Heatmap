@@ -4,6 +4,7 @@ using Heatmap.Range;
 using Heatmap.Samplers;
 using Heatmap.SkiaSharp.Receivers;
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace Heatmap.Samples;
 
@@ -16,6 +17,7 @@ public class Program
         await Ripple();
         await Rastrigin();
         await Function();
+        await Barcode();
     }
 
     public async static Task Ripple()
@@ -89,6 +91,25 @@ public class Program
             .GenerateAsync();
 
         await SaveAsync(await receiver.GetPngStreamAsync(400, 20), nameof(Function));
+    }
+
+    public async static Task Barcode()
+    {
+        var random = new Random();
+        var barcodeData = Enumerable.Range(0, 128).Select(_ => random.Next(0, 2)).ToArray();
+        float Func(Vector2 position) => barcodeData[(int)(position.X * barcodeData.Length)];
+
+        var sampler = new LambdaSampler(Func);
+        var receiver = new SkiaSharpReceiver();
+
+        await new DefaultHeatmapBuilder()
+            .SetSampler(sampler)
+            .SetReceiver(receiver)
+            .SetViewport(new Viewport(new Vector2(0), new Vector2(1)))
+            .SetSamplingResolution(new Vector2(barcodeData.Length, 1))
+            .GenerateAsync();
+
+        await SaveAsync(await receiver.GetPngStreamAsync(barcodeData.Length * 2, 20), nameof(Barcode));
     }
 
     private static async Task SaveAsync(Stream stream, string name)
