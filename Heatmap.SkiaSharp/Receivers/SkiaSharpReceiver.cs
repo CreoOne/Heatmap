@@ -23,14 +23,17 @@ namespace Heatmap.SkiaSharp.Receivers
                 var basePosition = fragment.Position * size;
                 var pixelSize = fragment.Size * size;
 
-                for (var offsetX = 0; offsetX < Math.Ceiling(pixelSize.X); offsetX++)
-                    for (var offsetY = 0; offsetY < Math.Ceiling(pixelSize.Y); offsetY++)
+                for (var offsetX = 0; offsetX <= Math.Ceiling(pixelSize.X); offsetX++)
+                    for (var offsetY = 0; offsetY <= Math.Ceiling(pixelSize.Y); offsetY++)
                     {
                         var offset = new Vector2(offsetX, offsetY);
                         var shifted = basePosition + offset;
 
-                        if(shifted.X >= 0 && shifted.Y >= 0 && shifted.X < width && shifted.Y < height)
-                            bitmap.SetPixel((int)Math.Round(shifted.X), (int)Math.Round(shifted.Y), ConvertColor(fragment.Color));
+                        var shiftedX = (int)shifted.X;
+                        var shiftedY = (int)shifted.Y;
+
+                        if (shiftedX >= 0 && shiftedY >= 0 && shiftedX < width && shiftedY < height)
+                            bitmap.SetPixel(shiftedX, shiftedY, ConvertColor(fragment.Color));
                     }
             }
 
