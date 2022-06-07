@@ -23,8 +23,8 @@ namespace Heatmap.SkiaSharp.Receivers
                 var basePosition = fragment.Position * size;
                 var pixelSize = fragment.Size * size;
 
-                for (var offsetX = 0; offsetX <= Math.Ceiling(pixelSize.X); offsetX++)
-                    for (var offsetY = 0; offsetY <= Math.Ceiling(pixelSize.Y); offsetY++)
+                for (var offsetX = 0; offsetX < Math.Ceiling(pixelSize.X); offsetX++)
+                    for (var offsetY = 0; offsetY < Math.Ceiling(pixelSize.Y); offsetY++)
                     {
                         var offset = new Vector2(offsetX, offsetY);
                         var shifted = basePosition + offset;
