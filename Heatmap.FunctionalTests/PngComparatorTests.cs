@@ -1,7 +1,16 @@
+using Xunit.Abstractions;
+
 namespace Heatmap.FunctionalTests
 {
     public class PngComparatorTests
     {
+        public ITestOutputHelper TestOutputHelper { get; }
+
+        public PngComparatorTests(ITestOutputHelper testOutputHelper)
+        {
+            TestOutputHelper = testOutputHelper;
+        }
+
         [Fact]
         public void GivenTwoImagesWhenEqualCorrectOutput()
         {
@@ -10,11 +19,11 @@ namespace Heatmap.FunctionalTests
             using var rImage = new FileStream("Images/R.png", FileMode.Open);
 
             // Act
-            var comparisonResult = PngComparator.EqualInternal(qImage, rImage, nameof(GivenTwoImagesWhenEqualCorrectOutput));
+            var comparisonResult = PngComparator.Equal(qImage, rImage, nameof(GivenTwoImagesWhenEqualCorrectOutput));
 
             // Assert
             using var actual = new FileStream(comparisonResult.DifferenceFilePath, FileMode.Open);
-            PngComparator.Equal("Images/Difference.png", actual);
+            AssertPng.Equal("Images/Difference.png", actual, TestOutputHelper);
 
             // Cleanup only on success by design
             File.Delete(comparisonResult.ActualFilePath);

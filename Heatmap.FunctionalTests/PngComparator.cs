@@ -1,6 +1,5 @@
 ﻿using SkiaSharp;
 using System.Runtime.CompilerServices;
-using Xunit.Sdk;
 
 namespace Heatmap.FunctionalTests
 {
@@ -8,31 +7,26 @@ namespace Heatmap.FunctionalTests
     {
         const byte ImportanceMask = 0xfc;
 
-        public static void Equal(string patternFileName, Stream actual)
+        internal static ComparisonResult Equal(Stream expected, Stream actual, string caseName)
         {
-            var patternName = Path.GetFileNameWithoutExtension(patternFileName);
-            using var patternStream = new FileStream(patternFileName, FileMode.Open);
-
-            if (!EqualInternal(patternStream, actual, patternName).Success)
-                throw new XunitException();
-        }
-
-        internal static ComparisonResult EqualInternal(Stream expected, Stream actual, string caseName)
-        {
+            var errorMessages = new List<string>();
             using var expectedBitmap = SKBitmap.Decode(expected);
             using var actualBitmap = SKBitmap.Decode(actual);
 
             if (expectedBitmap.Width != actualBitmap.Width)
-                return new ComparisonResult { Success = false };
+                errorMessages.Add($"Size differs in width. Expected {expectedBitmap.Width}. Actual {actualBitmap.Width}.");
 
             if(expectedBitmap.Height != actualBitmap.Height)
-                return new ComparisonResult { Success = false };
+                errorMessages.Add($"Size differs in height. Expected {expectedBitmap.Height}. Actual {actualBitmap.Height}.");
 
-            using var differenceBitmap = new SKBitmap(expectedBitmap.Width, expectedBitmap.Height);
+            var width = Math.Min(expectedBitmap.Width, actualBitmap.Width);
+            var height = Math.Min(expectedBitmap.Height, actualBitmap.Height);
+
+            using var differenceBitmap = new SKBitmap(width, height);
             var differences = 0;
 
-            for (int y = 0; y < expectedBitmap.Height; y++)
-                for (int x = 0; x < expectedBitmap.Width; x++)
+            for (int y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
                 {
                     var expectedPixel = expectedBitmap.GetPixel(x, y);
                     var actualPixel = actualBitmap.GetPixel(x, y);
@@ -42,25 +36,31 @@ namespace Heatmap.FunctionalTests
 
             if (differences > 0)
             {
+                var pixels = width * height;
+                var percentage = differences / (double)pixels;
+                errorMessages.Add($"Images differ in {differences}/{pixels} pixels ({percentage:0.00%}). Includes only pixels that are within both images sizes.");
+
                 var comparisonResult = new ComparisonResult
                 {
                     Success = false,
                     ActualFilePath = GetFileName(caseName, "actual"),
                     ExpectedFilePath = GetFileName(caseName, "expected"),
-                    DifferenceFilePath = GetFileName(caseName, "difference")
+                    DifferenceFilePath = GetFileName(caseName, "difference"),
+                    ErrorMessages = errorMessages
                 };
 
                 Save(differenceBitmap, comparisonResult.DifferenceFilePath);
                 Save(actualBitmap, comparisonResult.ActualFilePath);
                 Save(expectedBitmap, comparisonResult.ExpectedFilePath);
 
-                var pixels = expectedBitmap.Width * expectedBitmap.Height;
-                var percentage = differences / (double)pixels;
-                //throw new XunitException($"Images differ in {differences}/{pixels} pixels ({percentage:0.00%})");
                 return comparisonResult;
             }
 
-            return new ComparisonResult { Success = true };
+            return new ComparisonResult
+            {
+                Success = !errorMessages.Any(),
+                ErrorMessages = errorMessages
+            };
         }
 
         private static string GetFileName(string caseName, string suffix) => string.Join('.', caseName, suffix, "png");

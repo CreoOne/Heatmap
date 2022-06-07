@@ -3,13 +3,21 @@ using Heatmap.Primitives;
 using Heatmap.Samplers;
 using Heatmap.SkiaSharp.Receivers;
 using System.Numerics;
+using Xunit.Abstractions;
 
 namespace Heatmap.FunctionalTests
 {
     public class DefaultHeatmapBuilderTests
     {
+        public ITestOutputHelper TestOutputHelper { get; }
+
+        public DefaultHeatmapBuilderTests(ITestOutputHelper testOutputHelper)
+        {
+            TestOutputHelper = testOutputHelper;
+        }
+
         [Fact]
-        public async static Task GivenRastriginFunctionWhenGetPngStreamAsyncThenCorrectImageOutput()
+        public async Task GivenRastriginFunctionWhenGetPngStreamAsyncThenCorrectImageOutput()
         {
             // Rastrigin
             // https://en.wikipedia.org/wiki/Rastrigin_function
@@ -38,7 +46,7 @@ namespace Heatmap.FunctionalTests
                 .GenerateAsync();
 
             using var stream = await receiver.GetPngStreamAsync(1000, 1000);
-            PngComparator.Equal("Images/Rastrigin.png", stream);
+            AssertPng.Equal("Images/Rastrigin.png", stream, TestOutputHelper);
         }
     }
 }
