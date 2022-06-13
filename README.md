@@ -15,3 +15,5 @@ Visualization of all kinds of data. Examples being: Fourier transform of sound w
 For technical overview see [HOWTO](./docs/HOWTO.md).
 
 Written in .NET6, unit and functionally tested. Uses `System.Vector` for all positioning information and `double` for sampling.
+
+Fresh and compiling [samples](./samples/) always available.
