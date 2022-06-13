@@ -25,7 +25,7 @@ Setting viewport allows to explicitly set area of information for processing. It
 
 `Sampler` must be written in a way that returns correct information for data that is outside viewport.
 
-_Example using DefaultHeatmapBuilder_
+_Example using IHeatmapBuilder_
 ```csharp
 var min = new Vector2(-5f, -5f);
 var max = new Vector2(5f, 10f);
@@ -37,7 +37,7 @@ heatmapBuilder.SetViewport(viewport);
 
 Sampling resolution describes amount of samples gathered in relation to `X` and `Y` axis.
 
-_Example using DefaultHeatmapBuilder_
+_Example using IHeatmapBuilder_
 ```csharp
 var resolution = new Resolution(100, 50);
 heatmapBuilder.SetSamplingResolution(resolution);
@@ -53,7 +53,7 @@ Sets specific minima and maxima to be used. Samples out of range are automatical
 
 Note that, there is no way to present over-exposed and under-exposed values.
 
-_Example using DefaultHeatmapBuilder_
+_Example using IHeatmapBuilder_
 ```csharp
 var rangeFactory = new ConstantRangeFactory(-1f, 1f);
 heatmapBuilder.SetRangeFactory(rangeFactory);
@@ -63,7 +63,7 @@ heatmapBuilder.SetRangeFactory(rangeFactory);
 
 Sets minima and maxima from all samples that got gathered. This can result in details missing when very small and very large samples are present within same dataset.
 
-_Example using DefaultHeatmapBuilder_
+_Example using IHeatmapBuilder_
 ```csharp
 var rangeFactory = new AdaptiveRangeFactory();
 heatmapBuilder.SetRangeFactory(rangeFactory);
@@ -79,7 +79,7 @@ Currently no predefined color `gradients` are present in repository and need to 
 
 Uses constant linear distance between list of `RGB` colors to create `gradient`.
 
-_Example using DefaultHeatmapBuilder_
+_Example using IHeatmapBuilder_
 ```csharp
 var black = new RgbColor(0, 0, 0);
 var white = new RgbColor(255, 255, 255);
@@ -93,7 +93,7 @@ Uses linearly described position for colors allowing for non-uniform distances b
 
 When `gradient` is smaller than `0` to `1` range extreme colors get stretched without changing described colors (No interpolation is done, just closest color used outside gradient bounds).
 
-_Example using DefaultHeatmapBuilder_
+_Example using IHeatmapBuilder_
 ```csharp
 var black = new PositionedColor(0.25f, new RgbColor(0, 0, 0));
 var white = new PositionedColor(0.75f, new RgbColor(255, 255, 255));

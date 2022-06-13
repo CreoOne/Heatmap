@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Heatmap
 {
-    public class DefaultHeatmapBuilder : IDefaultHeatmapBuilder
+    public class DefaultHeatmapBuilder : IHeatmapBuilder
     {
         private ISampler Sampler { get; set; }
 
