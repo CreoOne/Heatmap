@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x.x
+      run: cd ./sources/
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
