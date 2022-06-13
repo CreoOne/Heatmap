@@ -39,7 +39,7 @@ Sampling resolution describes amount of samples gathered in relation to `X` and 
 
 _Example using DefaultHeatmapBuilder_
 ```csharp
-var resolution = new Vector2(100f, 50f);
+var resolution = new Resolution(100, 50);
 heatmapBuilder.SetSamplingResolution(resolution);
 ```
 
