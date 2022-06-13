@@ -11,9 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.Benchmarks", "Heatm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.SkiaSharp", "Heatmap.SkiaSharp\Heatmap.SkiaSharp.csproj", "{1E0BBFB8-7316-4315-990E-39C4FEF107E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.Samples", "Heatmap.Samples\Heatmap.Samples.csproj", "{0A7623F2-A164-416D-B300-C2F5A49C815D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Heatmap.FunctionalTests", "Heatmap.FunctionalTests\Heatmap.FunctionalTests.csproj", "{D38BE46A-C71C-4A14-A62D-78AE81F6A333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heatmap.FunctionalTests", "Heatmap.FunctionalTests\Heatmap.FunctionalTests.csproj", "{D38BE46A-C71C-4A14-A62D-78AE81F6A333}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{C1C7DC11-B1D3-4E42-AE45-2CDAEC2DD93B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpikesFunction", "..\samples\SpikesFunction\SpikesFunction.csproj", "{9BF0F244-5AEB-48FC-B5F0-AA460BAEA884}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ripple", "..\samples\Ripple\Ripple.csproj", "{97856DFF-11B0-49ED-9459-C21E65BA2AF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,17 +41,25 @@ Global
 		{1E0BBFB8-7316-4315-990E-39C4FEF107E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E0BBFB8-7316-4315-990E-39C4FEF107E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E0BBFB8-7316-4315-990E-39C4FEF107E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A7623F2-A164-416D-B300-C2F5A49C815D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A7623F2-A164-416D-B300-C2F5A49C815D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A7623F2-A164-416D-B300-C2F5A49C815D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A7623F2-A164-416D-B300-C2F5A49C815D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D38BE46A-C71C-4A14-A62D-78AE81F6A333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D38BE46A-C71C-4A14-A62D-78AE81F6A333}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D38BE46A-C71C-4A14-A62D-78AE81F6A333}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D38BE46A-C71C-4A14-A62D-78AE81F6A333}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BF0F244-5AEB-48FC-B5F0-AA460BAEA884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF0F244-5AEB-48FC-B5F0-AA460BAEA884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF0F244-5AEB-48FC-B5F0-AA460BAEA884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF0F244-5AEB-48FC-B5F0-AA460BAEA884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97856DFF-11B0-49ED-9459-C21E65BA2AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97856DFF-11B0-49ED-9459-C21E65BA2AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97856DFF-11B0-49ED-9459-C21E65BA2AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97856DFF-11B0-49ED-9459-C21E65BA2AF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9BF0F244-5AEB-48FC-B5F0-AA460BAEA884} = {C1C7DC11-B1D3-4E42-AE45-2CDAEC2DD93B}
+		{97856DFF-11B0-49ED-9459-C21E65BA2AF6} = {C1C7DC11-B1D3-4E42-AE45-2CDAEC2DD93B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D4882C2-A92E-4F51-8332-E7C2ABC6E85E}
