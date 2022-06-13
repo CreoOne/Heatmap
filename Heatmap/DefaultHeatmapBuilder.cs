@@ -28,9 +28,9 @@ namespace Heatmap
             return this;
         }
 
-        private Vector2 Resolution { get; set; } = new Vector2(100, 100);
+        private Resolution Resolution { get; set; } = new Resolution(100, 100);
 
-        public DefaultHeatmapBuilder SetSamplingResolution(Vector2 resolution)
+        public DefaultHeatmapBuilder SetSamplingResolution(Resolution resolution)
         {
             Resolution = resolution;
             return this;

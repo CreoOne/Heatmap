@@ -30,7 +30,7 @@ public class Program
             .SetReceiver(receiver)
             .GenerateAsync();
 
-        await SaveAsync(await receiver.GetPngStreamAsync(400, 400), nameof(Ripple));
+        await SaveAsync(await receiver.GetPngStreamAsync(new Resolution(400, 400)), nameof(Ripple));
     }
 
     public async static Task Function()
@@ -51,12 +51,12 @@ public class Program
             .SetSampler(sampler)
             .SetReceiver(receiver)
             .SetViewport(Viewport.FromTwoPoints(new Vector2(-4), new Vector2(4)))
-            .SetSamplingResolution(new Vector2(200, 1))
+            .SetSamplingResolution(new Resolution(200, 1))
             .SetGradient(gradient)
             .SetRangeFactory(new ConstantRangeFactory(-1.5f, 1.5f)) // cut off
             .GenerateAsync();
 
-        await SaveAsync(await receiver.GetPngStreamAsync(400, 20), nameof(Function));
+        await SaveAsync(await receiver.GetPngStreamAsync(new Resolution(400, 20)), nameof(Function));
     }
 
     public async static Task Barcode()
@@ -72,10 +72,10 @@ public class Program
             .SetSampler(sampler)
             .SetReceiver(receiver)
             .SetViewport(Viewport.FromTwoPoints(new Vector2(0), new Vector2(1)))
-            .SetSamplingResolution(new Vector2(barcodeData.Length, 1))
+            .SetSamplingResolution(new Resolution(barcodeData.Length, 1))
             .GenerateAsync();
 
-        await SaveAsync(await receiver.GetPngStreamAsync(barcodeData.Length * 2, 20), nameof(Barcode));
+        await SaveAsync(await receiver.GetPngStreamAsync(new Resolution(barcodeData.Length * 2, 20)), nameof(Barcode));
     }
 
     private static async Task SaveAsync(Stream stream, string name)

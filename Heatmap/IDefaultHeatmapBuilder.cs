@@ -4,7 +4,6 @@ using Heatmap.Primitives;
 using Heatmap.Range;
 using Heatmap.Receivers;
 using Heatmap.Samplers;
-using System.Numerics;
 using System.Threading.Tasks;
 
 namespace Heatmap
@@ -17,7 +16,7 @@ namespace Heatmap
         DefaultHeatmapBuilder SetRangeFactory(IRangeFactory rangeFactory);
         DefaultHeatmapBuilder SetReceiver(IReceiver receiver);
         DefaultHeatmapBuilder SetSampler(ISampler sampler);
-        DefaultHeatmapBuilder SetSamplingResolution(Vector2 resolution);
+        DefaultHeatmapBuilder SetSamplingResolution(Resolution resolution);
         DefaultHeatmapBuilder SetViewport(Viewport viewport);
     }
 }

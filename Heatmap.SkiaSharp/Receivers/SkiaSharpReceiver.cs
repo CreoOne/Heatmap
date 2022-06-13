@@ -13,15 +13,14 @@ namespace Heatmap.SkiaSharp.Receivers
 
         public void Receive(Fragment fragment) => Fragments.Add(fragment);
 
-        public Task<Stream> GetPngStreamAsync(int width, int height)
+        public Task<Stream> GetPngStreamAsync(Resolution resolution)
         {
-            using SKBitmap bitmap = new(width, height, SKColorType.Rgba8888, SKAlphaType.Unpremul);
-            var size = new Vector2(width, height);
+            using SKBitmap bitmap = new(resolution.Width, resolution.Height, SKColorType.Rgba8888, SKAlphaType.Unpremul);
 
             foreach (var fragment in Fragments)
             {
-                var basePosition = fragment.Position * size;
-                var pixelSize = fragment.Size * size;
+                var basePosition = fragment.Position * resolution;
+                var pixelSize = fragment.Size * resolution;
 
                 for (var offsetX = 0; offsetX < Math.Ceiling(pixelSize.X); offsetX++)
                     for (var offsetY = 0; offsetY < Math.Ceiling(pixelSize.Y); offsetY++)
@@ -32,7 +31,7 @@ namespace Heatmap.SkiaSharp.Receivers
                         var shiftedX = (int)shifted.X;
                         var shiftedY = (int)shifted.Y;
 
-                        if (shiftedX >= 0 && shiftedY >= 0 && shiftedX < width && shiftedY < height)
+                        if (shiftedX >= 0 && shiftedY >= 0 && shiftedX < resolution.Width && shiftedY < resolution.Height)
                             bitmap.SetPixel(shiftedX, shiftedY, ConvertColor(fragment.Color));
                     }
             }

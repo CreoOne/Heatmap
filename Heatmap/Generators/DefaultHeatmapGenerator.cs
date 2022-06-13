@@ -15,14 +15,14 @@ namespace Heatmap.Generators
     {
         private ConcurrentBag<PositionedSample> PositionedSamples { get; } = new();
 
-        public async Task SampleAsync(ISampler sampler, Viewport viewport, Vector2 resolution)
+        public async Task SampleAsync(ISampler sampler, Viewport viewport, Resolution resolution)
         {
             PositionedSamples.Clear();
 
             var sampleSize = new Vector2(1f) / resolution;
 
-            foreach (int y in Enumerable.Range(0, (int)resolution.Y))
-                foreach (int x in Enumerable.Range(0, (int)resolution.X))
+            foreach (int y in Enumerable.Range(0, resolution.Height))
+                foreach (int x in Enumerable.Range(0, resolution.Width))
                 {
                     Vector2 unitPosition = new Vector2(x, y) / resolution;
                     var viewPoint = viewport.GetViewPoint(unitPosition);

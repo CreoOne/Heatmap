@@ -41,11 +41,11 @@ namespace Heatmap.FunctionalTests
                 .SetSampler(sampler)
                 .SetReceiver(receiver)
                 .SetViewport(Viewport.FromTwoPoints(new Vector2(-5.12f), new Vector2(5.12f)))
-                .SetSamplingResolution(new Vector2(800, 800))
+                .SetSamplingResolution(new Resolution(800, 800))
                 .SetGradient(gradient)
                 .GenerateAsync();
 
-            using var stream = await receiver.GetPngStreamAsync(1000, 1000);
+            using var stream = await receiver.GetPngStreamAsync(new Resolution(1000, 1000));
             AssertPng.Equal("Images/Rastrigin.png", stream, TestOutputHelper);
         }
     }
