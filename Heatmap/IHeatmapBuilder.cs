@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Heatmap
 {
-    public interface IDefaultHeatmapBuilder
+    public interface IHeatmapBuilder
     {
         Task GenerateAsync();
         DefaultHeatmapBuilder SetGradient(IGradient gradient);
