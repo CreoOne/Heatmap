@@ -9,12 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Difference.png" />
     <None Remove="Images\Q.png" />
     <None Remove="Images\R.png" />
     <None Remove="Images\Rastrigin.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\Difference.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Q.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
