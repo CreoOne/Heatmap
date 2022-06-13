@@ -1,7 +1,8 @@
-﻿using SkiaSharp;
+﻿using Heatmap.FunctionalTests.Primitives;
+using SkiaSharp;
 using System.Runtime.CompilerServices;
 
-namespace Heatmap.FunctionalTests
+namespace Heatmap.FunctionalTests.Comparator
 {
     internal static class PngComparator
     {
@@ -16,7 +17,7 @@ namespace Heatmap.FunctionalTests
             if (expectedBitmap.Width != actualBitmap.Width)
                 errorMessages.Add($"Size differs in width. Expected {expectedBitmap.Width}. Actual {actualBitmap.Width}.");
 
-            if(expectedBitmap.Height != actualBitmap.Height)
+            if (expectedBitmap.Height != actualBitmap.Height)
                 errorMessages.Add($"Size differs in height. Expected {expectedBitmap.Height}. Actual {actualBitmap.Height}.");
 
             var width = Math.Min(expectedBitmap.Width, actualBitmap.Width);
@@ -79,10 +80,10 @@ namespace Heatmap.FunctionalTests
             var greenDifference = Diff(expected.Green, actual.Green);
             var blueDifference = Diff(expected.Blue, actual.Blue);
             var alphaDifference = Diff(expected.Alpha, actual.Alpha);
-            
+
             var colorDifference = redDifference || greenDifference || blueDifference;
 
-            if(colorDifference)
+            if (colorDifference)
                 differenceCounter++;
 
             return new SKColor(colorDifference ? byte.MaxValue : byte.MinValue, 0, alphaDifference ? byte.MaxValue : byte.MinValue);

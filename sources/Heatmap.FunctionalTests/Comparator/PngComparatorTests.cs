@@ -1,6 +1,6 @@
 using Xunit.Abstractions;
 
-namespace Heatmap.FunctionalTests
+namespace Heatmap.FunctionalTests.Comparator
 {
     public class PngComparatorTests
     {

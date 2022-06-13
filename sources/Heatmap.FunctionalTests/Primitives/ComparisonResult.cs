@@ -1,4 +1,4 @@
-﻿namespace Heatmap.FunctionalTests
+﻿namespace Heatmap.FunctionalTests.Primitives
 {
     public readonly struct ComparisonResult
     {
