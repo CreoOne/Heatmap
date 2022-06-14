@@ -40,5 +40,7 @@ namespace Heatmap.Gradients
 
             return RgbColor.Lerp(first, second, offset);
         }
+
+        public override string ToString() => "Linear";
     }
 }

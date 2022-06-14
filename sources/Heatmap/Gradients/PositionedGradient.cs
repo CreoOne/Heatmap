@@ -1,5 +1,4 @@
 ﻿using Heatmap.Primitives;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Heatmap.Gradients
@@ -8,7 +7,7 @@ namespace Heatmap.Gradients
     {
         private PositionedColor[] PositionedColors { get; }
 
-        public PositionedGradient(IEnumerable<PositionedColor> positionedColors)
+        public PositionedGradient(params PositionedColor[] positionedColors)
         {
             PositionedColors = positionedColors.OrderBy(positionedColor => positionedColor).ToArray();
         }
@@ -33,5 +32,7 @@ namespace Heatmap.Gradients
 
             return PositionedColors[^1].Color;
         }
+
+        public override string ToString() => "Positioned";
     }
 }
