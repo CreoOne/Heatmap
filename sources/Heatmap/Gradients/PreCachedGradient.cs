@@ -1,8 +1,5 @@
 ﻿using Heatmap.Extensions;
 using Heatmap.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace Heatmap.Gradients
 {
@@ -12,7 +9,7 @@ namespace Heatmap.Gradients
         private RgbColor[] Cache { get; }
         private uint Resolution { get; }
 
-        public PreCachedGradient(IGradient gradient, uint resolution = 255)
+        public PreCachedGradient(IGradient gradient, uint resolution = 256)
         {
             Gradient = gradient;
             Resolution = resolution;
