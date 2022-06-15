@@ -7,6 +7,7 @@ namespace Heatmap.FunctionalTests.Comparator
     internal static class PngComparator
     {
         const byte ImportanceMask = 0xfc;
+        const string TestArtifactsDirectoryName = "FunctionalTestsFailsArtifacts";
 
         internal static ComparisonResult Equal(Stream expected, Stream actual, string caseName)
         {
@@ -50,6 +51,7 @@ namespace Heatmap.FunctionalTests.Comparator
                     ErrorMessages = errorMessages
                 };
 
+                Directory.CreateDirectory(TestArtifactsDirectoryName);
                 Save(differenceBitmap, comparisonResult.DifferenceFilePath);
                 Save(actualBitmap, comparisonResult.ActualFilePath);
                 Save(expectedBitmap, comparisonResult.ExpectedFilePath);
@@ -64,7 +66,7 @@ namespace Heatmap.FunctionalTests.Comparator
             };
         }
 
-        private static string GetFileName(string caseName, string suffix) => string.Join('.', caseName, suffix, "png");
+        private static string GetFileName(string caseName, string suffix) => Path.Combine(TestArtifactsDirectoryName, string.Join('.', caseName, suffix, "png"));
 
         private static void Save(SKBitmap bitmap, string fileName)
         {

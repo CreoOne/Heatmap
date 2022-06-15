@@ -27,3 +27,8 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Failed functional tests artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: FunctionalTestsFailsArtifacts
+        path: ./Heatmap.FunctionalTests/bin/Release/FunctionalTestsFailsArtifacts/
