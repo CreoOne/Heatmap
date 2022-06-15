@@ -33,4 +33,4 @@ jobs:
       if: ${{ failure() && steps.tests.conclusion == 'failure' }}
       with:
         name: FunctionalTestsFailsArtifacts
-        path: ./Heatmap.FunctionalTests/bin/Release/net6.0/FunctionalTestsFailsArtifacts/
+        path: ./sources/Heatmap.FunctionalTests/bin/Release/net6.0/FunctionalTestsFailsArtifacts/
