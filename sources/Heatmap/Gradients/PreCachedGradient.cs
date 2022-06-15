@@ -18,9 +18,9 @@ namespace Heatmap.Gradients
 
         private static RgbColor[] GenerateCache(IGradient gradient, uint resolution)
         {
-            var result = new RgbColor[resolution];
+            var result = new RgbColor[resolution + 1];
 
-            for(int index = 0; index < resolution; index++)
+            for(int index = 0; index <= resolution; index++)
                 result[index] = gradient.GetColor(index / (double)resolution);
 
             return result;

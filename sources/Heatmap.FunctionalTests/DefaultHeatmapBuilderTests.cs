@@ -28,14 +28,14 @@ namespace Heatmap.FunctionalTests
 
             // Viridis
             // https://bids.berkeley.edu/events/better-default-colormap-matplotlib
-            var gradient = new LinearGradient(
+            var gradient = new PreCachedGradient(new LinearGradient(
                 new RgbColor(68, 1, 84),
                 new RgbColor(65, 68, 135),
                 new RgbColor(42, 120, 142),
                 new RgbColor(34, 168, 132),
                 new RgbColor(122, 209, 81),
                 new RgbColor(253, 231, 37)
-            );
+            ));
 
             await new DefaultHeatmapBuilder()
                 .SetSampler(sampler)
