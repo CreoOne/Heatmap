@@ -6,7 +6,7 @@ Heatmap is library for 3d graphing with third dimension being data described as 
 
 > Describe the data, Heatmap renders it.
 
-Example Rastrigin function with Viridis color palette produced but this library:
+Example Rastrigin function with Viridis color palette produced by this library:
 
 <img src="./sources/Heatmap.FunctionalTests/Images/Rastrigin.png" width="200" height="200">
 
