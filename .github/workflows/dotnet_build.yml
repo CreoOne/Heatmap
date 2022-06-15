@@ -32,5 +32,5 @@ jobs:
       uses: actions/upload-artifact@v3
       if: ${{ failure() && steps.tests.conclusion == 'failure' }}
       with:
-        name: FunctionalTestsFailsArtifacts.zip
+        name: FunctionalTestsFailsArtifacts
         path: ./sources/Heatmap.FunctionalTests/bin/Debug/net6.0/FunctionalTestsFailsArtifacts
