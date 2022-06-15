@@ -101,6 +101,21 @@ var gradient = new PositionedGradient(white, black); // black-hot
 heatmapBuilder.SetGradient(gradient);
 ```
 
+### PreCached color gradient
+
+Generates all potential colors beforehand using selected gradient method, then instead of color interpolation, executes lookup into cache.
+
+While this is faster method (see [benchmarks](../sources/Heatmap.Benchmarks/GradientsBenchmark.cs)) it lacks color precision sometimes resulting in off-by-one color selection. It is hard to notice by eye, so this method can be chosen when speed is expected at the cost of precision.
+
+_Example using IHeatmapBuilder and LinearGradient_
+```csharp
+var black = new RgbColor(0, 0, 0);
+var white = new RgbColor(255, 255, 255);
+var linear = new LinearGradient(black, white); // white-hot
+var preCached = new PreCachedGradient(linear);
+heatmapBuilder.SetGradient(preCached);
+```
+
 ## 4. Receiving
 
 Anything can be `receiver`. It receives `fragment` which contains color, position and size information to generate end artifact, most likely image in specific format (like png for example).
