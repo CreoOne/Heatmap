@@ -7,7 +7,7 @@ namespace Heatmap.Benchmarks
     public class GradientsBenchmark
     {
         [ParamsSource(nameof(GradientSource))]
-        public IGradient Gradient { get; set; }
+        public IGradient? Gradient { get; set; }
 
         public static IEnumerable<IGradient> GradientSource()
         {
@@ -31,7 +31,7 @@ namespace Heatmap.Benchmarks
             RgbColor result = default;
 
             for (double position = 0; position <= 1; position += 1e-7d)
-                result = Gradient.GetColor(position);
+                result = Gradient!.GetColor(position);
 
             return result;
         }
