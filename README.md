@@ -6,6 +6,10 @@ Heatmap is library for 3d graphing with third dimension being data described as 
 
 > Describe the data, Heatmap renders it.
 
+Example Rastrigin function with Viridis color palette produced but this library:
+
+<img src="./sources/Heatmap.FunctionalTests/Images/Rastrigin.png" width="200" height="200">
+
 ## What is it for?
 
 Visualization of all kinds of data. Examples being: Fourier transform of sound wave, heat information from infrared camera, weather information on a map and many more.
