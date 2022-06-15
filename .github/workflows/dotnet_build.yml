@@ -30,7 +30,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Failed functional tests artifacts
       uses: actions/upload-artifact@v3
-      if: ${{ steps.tests.outcome == 'failed' }}
+      if: ${{ failure() && steps.tests.conclusion == 'failure' }}
       with:
         name: FunctionalTestsFailsArtifacts
         path: ./Heatmap.FunctionalTests/bin/Release/FunctionalTestsFailsArtifacts/
