@@ -1,0 +1,34 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - 'release/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./sources/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.x.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet publish --no-restore
+    - name: Set release version
+      uses: actions/github-script@v6
+      id: release_version
+      with:
+        script: return context.ref.replace('release/', '')
+        result-encoding: string
+    - name: Print release version
+      run: echo ${{ steps.release_version.outputs.result }}
