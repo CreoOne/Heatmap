@@ -10,7 +10,6 @@
     <Authors>CreoOne</Authors>
     <PackageProjectUrl>https://github.com/CreoOne/Heatmap</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CreoOne/Heatmap</RepositoryUrl>
-    <PackageLicenseFile>C:\Users\creoo\source\repos\CreoOne\Heatmap\LICENSE</PackageLicenseFile>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
   </PropertyGroup>
