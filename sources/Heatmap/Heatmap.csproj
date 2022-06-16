@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
     <PackageId>CreoOne.$(AssemblyName)</PackageId>
     <Authors>CreoOne</Authors>
     <PackageProjectUrl>https://github.com/CreoOne/Heatmap</PackageProjectUrl>
