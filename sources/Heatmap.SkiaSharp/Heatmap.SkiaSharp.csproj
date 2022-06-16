@@ -10,6 +10,7 @@
     <RepositoryUrl>https://github.com/CreoOne/Heatmap</RepositoryUrl>
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
