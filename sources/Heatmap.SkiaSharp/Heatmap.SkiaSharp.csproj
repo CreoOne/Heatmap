@@ -8,8 +8,8 @@
     <Authors>CreoOne</Authors>
     <PackageProjectUrl>https://github.com/CreoOne/Heatmap</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CreoOne/Heatmap</RepositoryUrl>
-    <AssemblyVersion>$(VersionPrefix).0</AssemblyVersion>
-    <FileVersion>$(VersionPrefix).0</FileVersion>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <FileVersion>$(VersionPrefix)</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
