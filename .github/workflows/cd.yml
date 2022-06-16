@@ -3,8 +3,7 @@ name: CD
 on:
   push:
     branches:
-      - 'release/**'
-    
+      - 'release/**'   
 
 jobs:
   publish:
@@ -16,15 +15,6 @@ jobs:
         working-directory: ./sources/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.x.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet publish --no-restore
     - name: Set release version
       uses: actions/github-script@v6
       id: release_version
@@ -33,3 +23,10 @@ jobs:
         result-encoding: string
     - name: Print release version
       run: echo ${{ steps.release_version.outputs.result }}
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.x.x
+    - name: Build
+      run: dotnet pack -p:Version=${{ steps.release_version.outputs.result }}
