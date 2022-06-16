@@ -1,9 +1,14 @@
-name: CI
+name: CD
 
-on: push
+on:
+  push:
+    branches:
+      - 'release/**'
+  workflow_dispatch:
+    
 
 jobs:
-  build:
+  publish:
 
     runs-on: ubuntu-latest
 
@@ -20,13 +25,12 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      id: tests
-      run: dotnet test --no-build --verbosity normal
-    - name: Failed functional tests artifacts
-      uses: actions/upload-artifact@v3
-      if: ${{ failure() && steps.tests.conclusion == 'failure' }}
+      run: dotnet publish --no-restore
+    - name: Set release version
+      uses: actions/github-script@v6
+      id: release_version
       with:
-        name: FunctionalTestsFailsArtifacts
-        path: ./sources/Heatmap.FunctionalTests/bin/Debug/net6.0/FunctionalTestsFailsArtifacts
+        script: return context.ref.replace('refs/heads/release/', '')
+        result-encoding: string
+    - name: Print release version
+      run: echo ${{ steps.release_version.outputs.result }}

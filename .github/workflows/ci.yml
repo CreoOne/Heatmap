@@ -1,8 +1,8 @@
-name: CD
+name: CI
 
 on:
   push:
-    branches:
+    branches-ignore:
       - 'release/**'
 
 jobs:
@@ -23,12 +23,13 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet publish --no-restore
-    - name: Set release version
-      uses: actions/github-script@v6
-      id: release_version
+      run: dotnet build --no-restore
+    - name: Test
+      id: tests
+      run: dotnet test --no-build --verbosity normal
+    - name: Failed functional tests artifacts
+      uses: actions/upload-artifact@v3
+      if: ${{ failure() && steps.tests.conclusion == 'failure' }}
       with:
-        script: return context.ref.replace('release/', '')
-        result-encoding: string
-    - name: Print release version
-      run: echo ${{ steps.release_version.outputs.result }}
+        name: FunctionalTestsFailsArtifacts
+        path: ./sources/Heatmap.FunctionalTests/bin/Debug/net6.0/FunctionalTestsFailsArtifacts
