@@ -39,7 +39,7 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore -p:VersionPrefix=${{ env.VERSION_PREFIX }} -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
     - name: Pack
-      run: dotnet pack --output nupkgs --no-build -p:VersionPrefix=${{ env.VERSION_PREFIX }} -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
+      run: dotnet pack -c Release --output nupkgs --no-build -p:VersionPrefix=${{ env.VERSION_PREFIX }} -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
     - name: NuGet pack artifacts
       uses: actions/upload-artifact@v3
       with:
