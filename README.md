@@ -22,17 +22,17 @@ Written in .NET6, unit and functionally tested. Uses `System.Vector` for all pos
 
 Fresh and compiling [samples](./samples/) always available.
 
-### How to install?
+## How to install?
 
 Packages available on NuGet.org:
 
-#### Core abstraction and functionalities
+### Core abstraction and functionalities
 
 ```powershell
 PM> Install-Package CreoOne.Heatmap
 ```
 
-#### SkiaSharp receiver to render heatmaps into .png files
+### SkiaSharp receiver to render heatmaps into .png files
 
 ```powershell
 PM> Install-Package CreoOne.Heatmap.SkiaSharp
