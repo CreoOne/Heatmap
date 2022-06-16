@@ -16,6 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Find release version
       uses: actions/github-script@v6
       id: version
@@ -24,15 +25,18 @@ jobs:
           const version = context.ref.replace('refs/heads/release/', '')
           const parts = version.split('-')
           return { prefix: parts[0], suffix: parts[1] || '' }
-    - name: Print release version
-      run: echo ${{ fromJSON(steps.version.outputs.result).preffix }} ${{ fromJSON(steps.version.outputs.result).suffix }}
+    - name: Set release version prefix
+      run: echo "VERSION_PREFIX=${{ fromJSON(steps.version.outputs.result).prefix }}" >> $GITHUB_ENV
+    - name: Set release version suffix
+      run: echo "VERSION_SUFFIX=${{ fromJSON(steps.version.outputs.result).suffix }}" >> $GITHUB_ENV
+      
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x.x
     - name: Restore
       run: dotnet restore
-#    - name: Build
-#      run: dotnet build --no-restore -p:VersionPrefix=${{ steps.version_prefix.outputs.result }} -p:VersionSuffix=${{ steps.version_suffix.outputs.result }}
-#    - name: Pack
-#      run: dotnet pack --output nupkgs --no-build -p:VersionPrefix=${{ steps.version_prefix.outputs.result }} -p:VersionSuffix=${{ steps.version_suffix.outputs.result }}
+    - name: Build
+      run: dotnet build --no-restore -p:VersionPrefix=${{ env.VERSION_PREFIX }} -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
+    - name: Pack
+      run: dotnet pack --output nupkgs --no-build -p:VersionPrefix=${{ env.VERSION_PREFIX }} -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
