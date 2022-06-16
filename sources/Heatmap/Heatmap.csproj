@@ -5,12 +5,20 @@
     <IsPackable>true</IsPackable>
     <PackageId>CreoOne.$(AssemblyName)</PackageId>
     <Authors>CreoOne</Authors>
-    <PackageProjectUrl>https://github.com/CreoOne/Heatmap</PackageProjectUrl>
+    <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/CreoOne/Heatmap</RepositoryUrl>
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\NuGet.CreoOne.Heatmap\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="system.numerics.vectors" Version="4.5.0" />
