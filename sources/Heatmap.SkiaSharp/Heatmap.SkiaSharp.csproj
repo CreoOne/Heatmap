@@ -6,7 +6,6 @@
     <IsPackable>true</IsPackable>
     <PackageId>CreoOne.$(AssemblyName)</PackageId>
     <Authors>CreoOne</Authors>
-    <PackageProjectUrl>https://github.com/CreoOne/Heatmap</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CreoOne/Heatmap</RepositoryUrl>
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
