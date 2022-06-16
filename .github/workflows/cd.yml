@@ -37,7 +37,7 @@ jobs:
     - name: Restore
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -p:VersionPrefix=${{ env.VERSION_PREFIX }} -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
+      run: dotnet build -c Release --no-restore -p:VersionPrefix=${{ env.VERSION_PREFIX }} -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
     - name: Pack
       run: dotnet pack --output nupkgs --no-build -p:VersionPrefix=${{ env.VERSION_PREFIX }} -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
     - name: NuGet pack artifacts
@@ -46,4 +46,4 @@ jobs:
         name: NuGets
         path: ./sources/nupkgs
     - name: Push generated package to NuGet registry
-      run: dotnet nuget push ./nupkgs/*.nupkg --skip-duplicate -k ${{ secrets.NUGET_APIKEY }}
+      run: dotnet nuget push ./nupkgs/*.nupkg --skip-duplicate -k ${{ secrets.NUGET_APIKEY }} -s https://api.nuget.org/v3/index.json
