@@ -16,21 +16,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set release version
+    - name: Find release version
       uses: actions/github-script@v6
-      id: release_version
+      id: version
       with:
-        script: return context.ref.replace('refs/heads/release/', '')
-        result-encoding: string
+        script: |
+          const version = context.ref.replace('refs/heads/release/', '')
+          const parts = version.split('-')
+          return { prefix: parts[0], suffix: parts[1] || '' }
     - name: Print release version
-      run: echo ${{ steps.release_version.outputs.result }}
+      run: echo ${{ fromJSON(steps.version.outputs.result).preffix }} ${{ fromJSON(steps.version.outputs.result).suffix }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x.x
     - name: Restore
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Pack
-      run: dotnet pack --no-build
+#    - name: Build
+#      run: dotnet build --no-restore -p:VersionPrefix=${{ steps.version_prefix.outputs.result }} -p:VersionSuffix=${{ steps.version_suffix.outputs.result }}
+#    - name: Pack
+#      run: dotnet pack --output nupkgs --no-build -p:VersionPrefix=${{ steps.version_prefix.outputs.result }} -p:VersionSuffix=${{ steps.version_suffix.outputs.result }}
