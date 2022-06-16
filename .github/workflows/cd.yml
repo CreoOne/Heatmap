@@ -15,6 +15,7 @@ jobs:
         working-directory: ./sources/
 
     steps:
+    - uses: actions/checkout@v3
     - name: Set release version
       uses: actions/github-script@v6
       id: release_version
@@ -23,7 +24,6 @@ jobs:
         result-encoding: string
     - name: Print release version
       run: echo ${{ steps.release_version.outputs.result }}
-    - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
