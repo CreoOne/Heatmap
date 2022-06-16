@@ -45,3 +45,5 @@ jobs:
       with:
         name: NuGets
         path: ./sources/nupkgs
+    - name: Push generated package to NuGet registry
+      run: dotnet nuget push ./nupkgs/*.nupkg --skip-duplicate -k ${{ secrets.NUGET_APIKEY }}
