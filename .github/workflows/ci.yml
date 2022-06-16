@@ -23,7 +23,7 @@ jobs:
     - name: Restore
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore -p:VersionPrefix 0.0.0
     - name: Test
       id: tests
       run: dotnet test --no-build --verbosity normal
