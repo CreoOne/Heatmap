@@ -28,5 +28,9 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x.x
+    - name: Restore
+      run: dotnet restore
     - name: Build
-      run: dotnet pack -p:Version=${{ steps.release_version.outputs.result }}
+      run: dotnet build --no-restore
+    - name: Pack
+      run: dotnet pack --no-build
