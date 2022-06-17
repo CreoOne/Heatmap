@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Heatmap.Range
+namespace Heatmap.Ranges
 {
     public sealed class AdaptiveRange : Range
     {

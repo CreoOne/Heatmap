@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Heatmap.Range
+namespace Heatmap.Ranges
 {
     public sealed class ConstantRange : Range
     {

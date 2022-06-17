@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace Heatmap.Range
+namespace Heatmap.Ranges
 {
     public class ConstantRangeFactory : IRangeFactory
     {
         public double Min { get; }
-        public double Max{ get; }
+        public double Max { get; }
 
         public ConstantRangeFactory(double min, double max)
         {

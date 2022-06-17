@@ -1,7 +1,7 @@
 ﻿using Heatmap;
 using Heatmap.Gradients;
 using Heatmap.Primitives;
-using Heatmap.Range;
+using Heatmap.Ranges;
 using Heatmap.Samplers;
 using Heatmap.SkiaSharp.Receivers;
 using System.Numerics;

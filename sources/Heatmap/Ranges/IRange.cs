@@ -1,4 +1,4 @@
-﻿namespace Heatmap.Range
+﻿namespace Heatmap.Ranges
 {
     public interface IRange
     {

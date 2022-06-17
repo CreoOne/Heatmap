@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Heatmap.Range
+namespace Heatmap.Ranges
 {
     public class AdaptiveRangeFactory : IRangeFactory
     {

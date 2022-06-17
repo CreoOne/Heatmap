@@ -1,6 +1,6 @@
 ﻿using Heatmap.Gradients;
 using Heatmap.Primitives;
-using Heatmap.Range;
+using Heatmap.Ranges;
 using Heatmap.Receivers;
 using Heatmap.Samplers;
 using System.Collections.Concurrent;
