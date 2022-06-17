@@ -1,5 +1,7 @@
 # How to work with Heatmap
 
+&nbsp;
+
 ## Data processing pipeline
 
 Data is processed in order described below.
@@ -8,6 +10,8 @@ Data is processed in order described below.
 2. Ranging
 3. Color mapping
 4. Receiving
+
+&nbsp;
 
 ## 1. Sampling
 
@@ -43,6 +47,8 @@ var resolution = new Resolution(100, 50);
 heatmapBuilder.SetSamplingResolution(resolution);
 ```
 
+&nbsp;
+
 ## 2. Ranging
 
 Value of particular sample needs to be normalized between maximal and minimal bounds. This happens inside `Range` step. All ranges are currently linear in nature.
@@ -68,6 +74,8 @@ _Example using IHeatmapBuilder_
 var rangeFactory = new AdaptiveRangeFactory();
 heatmapBuilder.SetRangeFactory(rangeFactory);
 ```
+
+&nbsp;
 
 ## 3. Color mapping
 
@@ -115,6 +123,8 @@ var linear = new LinearGradient(black, white); // white-hot
 var preCached = new PreCachedGradient(linear);
 heatmapBuilder.SetGradient(preCached);
 ```
+
+&nbsp;
 
 ## 4. Receiving
 

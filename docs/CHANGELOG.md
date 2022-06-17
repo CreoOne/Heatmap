@@ -4,17 +4,9 @@ What was released in specific version and what not, but is worked on.
 
 &nbsp;
 
----
-
-&nbsp;
-
 ## Unreleased changes
 
 _nothing_
-
-&nbsp;
-
----
 
 &nbsp;
 
@@ -26,19 +18,11 @@ _nothing_
 
 &nbsp;
 
----
-
-&nbsp;
-
 ## 0.0.3-rc
 
 ### Addition
 
 - NuGet's contain license information
-
-&nbsp;
-
----
 
 &nbsp;
 
