@@ -47,3 +47,13 @@ jobs:
         path: ./sources/nupkgs
     - name: Push generated package to NuGet registry
       run: dotnet nuget push ./nupkgs/*.nupkg -k ${{ secrets.NUGET_APIKEY }} -s https://api.nuget.org/v3/index.json
+    - name: Create version tag
+      uses: actions/github-script@v5
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: 'refs/tags/v${{ env.VERSION_PREFIX }}${{ env.VERSION_SUFFIX }}',
+            sha: context.sha
+          })
