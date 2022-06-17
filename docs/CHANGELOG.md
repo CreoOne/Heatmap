@@ -6,6 +6,8 @@ What was released in specific version and what not, but is worked on.
 
 ---
 
+&nbsp;
+
 ## Unreleased changes
 
 _nothing_
@@ -13,6 +15,8 @@ _nothing_
 &nbsp;
 
 ---
+
+&nbsp;
 
 ## 0.0.4-rc
 
@@ -24,6 +28,8 @@ _nothing_
 
 ---
 
+&nbsp;
+
 ## 0.0.3-rc
 
 ### Addition
@@ -33,6 +39,8 @@ _nothing_
 &nbsp;
 
 ---
+
+&nbsp;
 
 ## 0.0.1-rc
 
