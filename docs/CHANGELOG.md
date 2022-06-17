@@ -10,6 +10,14 @@ _nothing_
 
 &nbsp;
 
+## 1.0.0
+
+### Fixed
+
+- Range calculation giving erroneous results when range does not match unit length.
+
+&nbsp;
+
 ## 0.0.4-rc
 
 ### Change
@@ -34,4 +42,4 @@ _nothing_
 
 ### Addition
 
-- `PreCachedGradient` that allows for faster color retireval by cache lookup at the small off-by-one cost in precision.
+- `PreCachedGradient` that allows for faster color retrieval by cache lookup at the small off-by-one cost in precision.
