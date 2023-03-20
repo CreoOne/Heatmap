@@ -16,9 +16,15 @@ namespace Heatmap.SkiaSharp.Receivers
 
         public void Receive(Fragment fragment) => Fragments.Add(fragment);
 
-        public Task<Stream> GetPngStreamAsync(Resolution resolution)
+        public unsafe Task<Stream> GetPngStreamAsync(Resolution resolution)
         {
             using SKBitmap bitmap = new(resolution.Width, resolution.Height, SKColorType.Rgba8888, SKAlphaType.Unpremul);
+            var intPtr = bitmap.GetPixels();
+
+            if (intPtr == IntPtr.Zero)
+                return Task.FromResult((Stream)new MemoryStream());
+
+            var span = new Span<uint>(intPtr.ToPointer(), resolution.Width * resolution.Height);
 
             foreach (var fragment in Fragments)
             {
@@ -35,7 +41,7 @@ namespace Heatmap.SkiaSharp.Receivers
                         var shiftedY = (int)shifted.Y;
 
                         if (shiftedX >= 0 && shiftedY >= 0 && shiftedX < resolution.Width && shiftedY < resolution.Height)
-                            bitmap.SetPixel(shiftedX, shiftedY, ConvertColor(fragment.Color));
+                            span[shiftedY * resolution.Height + shiftedX] = ConvertColor(fragment.Color);
                     }
             }
 
@@ -44,7 +50,6 @@ namespace Heatmap.SkiaSharp.Receivers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //private static SKColor ConvertColor(RgbColor color) => (uint)((/*color.Alpha*/255 << 24) | (color.Blue << 16) | (color.Green << 8) | color.Red);
-        private static SKColor ConvertColor(RgbColor color) => new(color.Red, color.Green, color.Blue);
+        private static uint ConvertColor(RgbColor color) => (uint)((/*color.Alpha*/0xff << 24) | (color.Blue << 16) | (color.Green << 8) | color.Red);
     }
 }

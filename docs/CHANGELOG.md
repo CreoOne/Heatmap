@@ -6,7 +6,21 @@ What was released in specific version and what not, but is worked on.
 
 ## Unreleased changes
 
-_nothing_
+### Fixed
+
+- Poor performance and memory management of SkiaSharpReceiver
+
+_before_
+
+| Method            | Mean    | Error    | StdDev   | Gen0       | Allocated |
+|-------------------|---------|----------|----------|------------|-----------|
+| GetPngStreamAsync | 3.909 s | 0.0766 s | 0.0787 s | 78000.0000 | 480.97 MB |
+
+_after_
+
+| Method            | Mean     | Error   | StdDev  | Allocated |
+|-------------------|----------|---------|---------|-----------|
+| GetPngStreamAsync | 256.3 ms | 2.37 ms | 2.10 ms | 12.21 MB  |
 
 &nbsp;
 

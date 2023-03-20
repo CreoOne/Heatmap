@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpikesFunction", "..\sample
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ripple", "..\samples\Ripple\Ripple.csproj", "{97856DFF-11B0-49ED-9459-C21E65BA2AF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heatmap.SkiaSharp.Benchmarks", "Heatmap.SkiaSharp.Benchmarks\Heatmap.SkiaSharp.Benchmarks.csproj", "{DE5BCFDA-D42C-4370-9A81-B30E0E17AE72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{97856DFF-11B0-49ED-9459-C21E65BA2AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97856DFF-11B0-49ED-9459-C21E65BA2AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97856DFF-11B0-49ED-9459-C21E65BA2AF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE5BCFDA-D42C-4370-9A81-B30E0E17AE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE5BCFDA-D42C-4370-9A81-B30E0E17AE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE5BCFDA-D42C-4370-9A81-B30E0E17AE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE5BCFDA-D42C-4370-9A81-B30E0E17AE72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
